@@ -11,6 +11,8 @@
       --light: #fff;
       --dark: #2c3e50;
       --gray: #7f8c8d;
+      --success: #27ae60;
+      --error: #e74c3c;
       --gradient: linear-gradient(135deg, #ffecd2, #fcb69f);
     }
 
@@ -32,6 +34,7 @@
       text-align: center;
       max-width: 400px;
       width: 100%;
+      position: relative;
     }
 
     h1 {
@@ -68,10 +71,90 @@
       border-color: var(--primary);
     }
 
+    .custom-amount {
+      margin: 15px 0;
+    }
+    
+    .custom-amount input {
+      padding: 12px;
+      width: 100%;
+      border-radius: 10px;
+      border: 2px solid #eee;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    .payment-status {
+      display: none;
+      padding: 15px;
+      border-radius: 10px;
+      margin: 15px 0;
+      background: #f8f9fa;
+    }
+    
+    .success {
+      background: rgba(39, 174, 96, 0.1);
+      color: var(--success);
+      border: 1px solid var(--success);
+    }
+    
+    .error {
+      background: rgba(231, 76, 60, 0.1);
+      color: var(--error);
+      border: 1px solid var(--error);
+    }
+
     footer {
       margin-top: 20px;
       font-size: 13px;
       color: var(--gray);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    
+    .modal-content {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      text-align: center;
+      max-width: 350px;
+      width: 90%;
+    }
+    
+    .modal-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .modal-btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .confirm-btn {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .cancel-btn {
+      background: #e0e0e0;
+      color: #555;
     }
   </style>
 </head>
@@ -89,21 +172,148 @@
       <button class="amount-btn" data-amount="1001">₹1001</button>
     </div>
 
+    <div class="custom-amount">
+      <input type="number" id="customAmount" placeholder="Or enter custom amount">
+    </div>
+
+    <div id="paymentStatus" class="payment-status"></div>
+
     <footer>
       <i class="fas fa-shield-alt"></i> Secure UPI Payment
     </footer>
   </div>
 
+  <div id="paymentModal" class="modal">
+    <div class="modal-content">
+      <h2>Confirm Payment</h2>
+      <p>You are about to pay ₹<span id="confirmAmount">0</span> to Dussehra Mamul</p>
+      <p class="small">Make sure you have a UPI app installed on your device</p>
+      <div class="modal-buttons">
+        <button class="modal-btn cancel-btn" id="cancelPayment">Cancel</button>
+        <button class="modal-btn confirm-btn" id="confirmPayment">Pay Now</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     const amountButtons = document.querySelectorAll('.amount-btn');
-    const upiID = "8328873021@postbank"; // your UPI ID
-
+    const customAmountInput = document.getElementById('customAmount');
+    const paymentStatus = document.getElementById('paymentStatus');
+    const paymentModal = document.getElementById('paymentModal');
+    const confirmAmount = document.getElementById('confirmAmount');
+    const cancelPaymentBtn = document.getElementById('cancelPayment');
+    const confirmPaymentBtn = document.getElementById('confirmPayment');
+    
+    let selectedAmount = 0;
+    
+    // Replace with your verified UPI ID
+    const upiID = "8328873021@postbank"; 
+    
+    // Common UPI apps for fallback
+    const upiApps = {
+      phonepe: 'phonepe://',
+      gpay: 'tez://',
+      paytm: 'paytmmp://',
+      bhim: 'bhim://'
+    };
+    
+    // Function to validate UPI ID format
+    function isValidUpiId(upiId) {
+      const upiRegex = /^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/;
+      return upiRegex.test(upiId);
+    }
+    
+    // Function to trigger UPI payment
+    function initiateUPIPayment(amount) {
+      if (!isValidUpiId(upiID)) {
+        showPaymentStatus("Invalid UPI ID. Please contact support.", "error");
+        return;
+      }
+      
+      // Format amount to string without decimals for UPI
+      const formattedAmount = amount.toString();
+      
+      // Create UPI link with proper parameters
+      const upiLink = `upi://pay?pa=${upiID}&pn=Dussehra%20Mamul&am=${formattedAmount}&cu=INR&tn=Dussehra%20Mamul%20Contribution`;
+      
+      // Try to open the UPI link
+      window.location.href = upiLink;
+      
+      // Set a timeout to check if the app opened
+      setTimeout(() => {
+        // If we're still on the page, the app likely didn't open
+        if (!document.hidden) {
+          showPaymentStatus("No UPI app found. Please install a UPI app like GPay, PhonePe, or Paytm.", "error");
+          showUPIAppsGuide();
+        }
+      }, 1000);
+    }
+    
+    // Show guide for UPI apps if none is installed
+    function showUPIAppsGuide() {
+      paymentStatus.innerHTML += `
+        <p style="margin-top: 10px;">You can also manually open your UPI app and send to:</p>
+        <p style="font-weight: bold; word-break: break-all;">${upiID}</p>
+        <p>Amount: ₹${selectedAmount}</p>
+      `;
+    }
+    
+    // Show payment status message
+    function showPaymentStatus(message, type) {
+      paymentStatus.textContent = message;
+      paymentStatus.className = `payment-status ${type}`;
+      paymentStatus.style.display = 'block';
+      
+      // Auto hide after 5 seconds
+      setTimeout(() => {
+        paymentStatus.style.display = 'none';
+      }, 5000);
+    }
+    
+    // Handle amount button clicks
     amountButtons.forEach(button => {
       button.addEventListener('click', () => {
-        const amount = button.dataset.amount;
-        const upiLink = `upi://pay?pa=${upiID}&pn=Dussehra+Mamul&am=${amount}&cu=INR&tn=Dussehra+Mamul`;
-        window.location.href = upiLink;
+        selectedAmount = button.dataset.amount;
+        confirmAmount.textContent = selectedAmount;
+        paymentModal.style.display = 'flex';
       });
+    });
+    
+    // Handle custom amount input
+    customAmountInput.addEventListener('keyup', (e) => {
+      if (e.key === 'Enter') {
+        selectedAmount = customAmountInput.value;
+        if (selectedAmount > 0) {
+          confirmAmount.textContent = selectedAmount;
+          paymentModal.style.display = 'flex';
+        }
+      }
+    });
+    
+    // Handle payment confirmation
+    confirmPaymentBtn.addEventListener('click', () => {
+      paymentModal.style.display = 'none';
+      initiateUPIPayment(selectedAmount);
+    });
+    
+    // Handle payment cancellation
+    cancelPaymentBtn.addEventListener('click', () => {
+      paymentModal.style.display = 'none';
+    });
+    
+    // Check if page was reopened after UPI app redirect (payment success/failure)
+    window.addEventListener('pageshow', function(event) {
+      if (event.persisted) {
+        // Page was restored from bfcache, which might indicate returning from UPI app
+        const urlParams = new URLSearchParams(window.location.search);
+        const status = urlParams.get('payment');
+        
+        if (status === 'success') {
+          showPaymentStatus("Payment successful! Thank you for your contribution.", "success");
+        } else if (status === 'failed') {
+          showPaymentStatus("Payment failed. Please try again.", "error");
+        }
+      }
     });
   </script>
 </body>
