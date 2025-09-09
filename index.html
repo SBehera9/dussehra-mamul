@@ -60,6 +60,7 @@
       cursor: pointer;
       transition: 0.3s;
       font-weight: bold;
+      width: 100%;
     }
     .amount-btn:hover {
       background: var(--primary);
@@ -95,7 +96,7 @@
 
   <script>
     const amountButtons = document.querySelectorAll('.amount-btn');
-    const upiID = "8328873021@postbank";
+    const upiID = "8328873021@postbank"; // your UPI ID
 
     amountButtons.forEach(button => {
       button.addEventListener('click', () => {
