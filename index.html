@@ -52,58 +52,19 @@
       margin-bottom: 16px;
     }
     .amount-btn {
-      padding: 12px;
+      padding: 14px;
       font-size: 16px;
       border-radius: 10px;
       border: 2px solid #eee;
       background: #fafafa;
       cursor: pointer;
       transition: 0.3s;
+      font-weight: bold;
     }
-    .amount-btn:hover,
-    .amount-btn.selected {
+    .amount-btn:hover {
       background: var(--primary);
       color: #fff;
       border-color: var(--primary);
-    }
-
-    .custom-input {
-      display: flex;
-      align-items: center;
-      border: 2px solid #eee;
-      border-radius: 10px;
-      padding: 5px 12px;
-      background: #fafafa;
-    }
-    .custom-input span {
-      font-weight: bold;
-      margin-right: 5px;
-    }
-    .custom-input input {
-      flex: 1;
-      border: none;
-      background: transparent;
-      font-size: 16px;
-      padding: 8px;
-      outline: none;
-    }
-
-    .pay-btn {
-      width: 100%;
-      padding: 14px;
-      margin-top: 20px;
-      font-size: 16px;
-      font-weight: bold;
-      color: white;
-      background: var(--primary);
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: 0.3s;
-      box-shadow: 0 5px 15px rgba(230, 126, 34, 0.4);
-    }
-    .pay-btn:hover {
-      background: #d35400;
     }
 
     footer {
@@ -119,18 +80,13 @@
     <p>Offer your devotional contribution this Dussehra</p>
 
     <div class="amount-btns">
+      <button class="amount-btn" data-amount="1">₹1</button>
       <button class="amount-btn" data-amount="51">₹51</button>
       <button class="amount-btn" data-amount="101">₹101</button>
-      <button class="amount-btn" data-amount="251">₹251</button>
+      <button class="amount-btn" data-amount="201">₹201</button>
       <button class="amount-btn" data-amount="501">₹501</button>
+      <button class="amount-btn" data-amount="1001">₹1001</button>
     </div>
-
-    <div class="custom-input">
-      <span>₹</span>
-      <input type="number" id="customAmount" placeholder="Enter amount" min="1">
-    </div>
-
-    <button class="pay-btn" id="payButton"><i class="fas fa-hand-holding-heart"></i> Pay Now</button>
 
     <footer>
       <i class="fas fa-shield-alt"></i> Secure UPI Payment
@@ -139,36 +95,14 @@
 
   <script>
     const amountButtons = document.querySelectorAll('.amount-btn');
-    const customAmountInput = document.getElementById('customAmount');
-    const payButton = document.getElementById('payButton');
-
-    let selectedAmount = null;
+    const upiID = "8328873021@postbank";
 
     amountButtons.forEach(button => {
       button.addEventListener('click', () => {
-        amountButtons.forEach(btn => btn.classList.remove('selected'));
-        button.classList.add('selected');
-        selectedAmount = button.dataset.amount;
-        customAmountInput.value = "";
+        const amount = button.dataset.amount;
+        const upiLink = `upi://pay?pa=${upiID}&pn=Dussehra+Mamul&am=${amount}&cu=INR&tn=Dussehra+Mamul`;
+        window.location.href = upiLink;
       });
-    });
-
-    customAmountInput.addEventListener('input', () => {
-      amountButtons.forEach(btn => btn.classList.remove('selected'));
-      selectedAmount = customAmountInput.value;
-    });
-
-    payButton.addEventListener('click', () => {
-      if (!selectedAmount || selectedAmount < 1) {
-        alert("Please enter or select an amount");
-        return;
-      }
-
-      const upiID = "8328873021@postbank";
-
-      const upiLink = `upi://pay?pa=${upiID}&pn=Dussehra+Mamul&am=${selectedAmount}&cu=INR&tn=Dussehra+Mamul`;
-
-      window.location.href = upiLink;
     });
   </script>
 </body>
