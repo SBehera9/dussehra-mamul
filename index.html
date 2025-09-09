@@ -8,43 +8,79 @@
   <style>
     :root {
       --primary: #e67e22;
+      --primary-dark: #d35400;
       --light: #fff;
       --dark: #2c3e50;
       --gray: #7f8c8d;
+      --light-gray: #ecf0f1;
       --success: #27ae60;
       --error: #e74c3c;
       --gradient: linear-gradient(135deg, #ffecd2, #fcb69f);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      font-family: "Segoe UI", sans-serif;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       background: var(--gradient);
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       padding: 20px;
+      color: var(--dark);
     }
 
     .container {
       background: var(--light);
-      padding: 28px;
-      border-radius: 18px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
       text-align: center;
-      max-width: 400px;
+      max-width: 450px;
       width: 100%;
       position: relative;
+      overflow: hidden;
+    }
+
+    .header {
+      margin-bottom: 25px;
+      position: relative;
+    }
+
+    .header::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 3px;
+      background: var(--primary);
+      margin: 12px auto;
+      border-radius: 3px;
     }
 
     h1 {
       color: var(--primary);
-      font-size: 26px;
-      margin-bottom: 10px;
+      font-size: 28px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
     }
+
     p {
       color: var(--gray);
-      font-size: 14px;
+      font-size: 16px;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .amount-section {
       margin-bottom: 20px;
     }
 
@@ -52,52 +88,121 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
     }
+
     .amount-btn {
-      padding: 14px;
-      font-size: 16px;
-      border-radius: 10px;
-      border: 2px solid #eee;
-      background: #fafafa;
+      padding: 16px;
+      font-size: 17px;
+      border-radius: 12px;
+      border: 2px solid var(--light-gray);
+      background: var(--light-gray);
       cursor: pointer;
-      transition: 0.3s;
-      font-weight: bold;
-      width: 100%;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
+
     .amount-btn:hover {
       background: var(--primary);
-      color: #fff;
+      color: var(--light);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(230, 126, 34, 0.3);
+    }
+
+    .amount-btn.selected {
+      background: var(--primary);
+      color: var(--light);
       border-color: var(--primary);
     }
 
     .custom-amount {
-      margin: 15px 0;
+      margin: 20px 0;
     }
-    
+
+    .custom-amount label {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--dark);
+      font-weight: 500;
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+      background: var(--light-gray);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid var(--light-gray);
+      transition: border-color 0.3s;
+    }
+
+    .input-group:focus-within {
+      border-color: var(--primary);
+    }
+
+    .input-group span {
+      padding: 0 15px;
+      font-weight: 600;
+      color: var(--dark);
+    }
+
     .custom-amount input {
-      padding: 12px;
+      padding: 16px;
       width: 100%;
-      border-radius: 10px;
-      border: 2px solid #eee;
+      border: none;
+      background: transparent;
       font-size: 16px;
-      text-align: center;
+      outline: none;
+    }
+
+    .pay-btn {
+      width: 100%;
+      padding: 18px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .pay-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(230, 126, 34, 0.4);
+    }
+
+    .pay-btn:active {
+      transform: translateY(0);
     }
 
     .payment-status {
       display: none;
-      padding: 15px;
-      border-radius: 10px;
-      margin: 15px 0;
-      background: #f8f9fa;
+      padding: 16px;
+      border-radius: 12px;
+      margin: 20px 0;
+      font-weight: 500;
+      text-align: center;
     }
-    
+
     .success {
       background: rgba(39, 174, 96, 0.1);
       color: var(--success);
       border: 1px solid var(--success);
     }
-    
+
     .error {
       background: rgba(231, 76, 60, 0.1);
       color: var(--error);
@@ -105,9 +210,13 @@
     }
 
     footer {
-      margin-top: 20px;
-      font-size: 13px;
+      margin-top: 25px;
+      font-size: 14px;
       color: var(--gray);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
 
     .modal {
@@ -122,198 +231,304 @@
       align-items: center;
       z-index: 1000;
     }
-    
+
     .modal-content {
       background: white;
-      padding: 25px;
-      border-radius: 15px;
+      padding: 30px;
+      border-radius: 20px;
       text-align: center;
-      max-width: 350px;
+      max-width: 400px;
       width: 90%;
+      box-shadow: var(--shadow);
+      animation: modalFadeIn 0.3s;
     }
-    
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal h2 {
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+
+    .modal p {
+      margin-bottom: 20px;
+      color: var(--dark);
+    }
+
     .modal-buttons {
       display: flex;
       justify-content: center;
       gap: 15px;
       margin-top: 20px;
     }
-    
+
     .modal-btn {
-      padding: 10px 20px;
-      border-radius: 8px;
+      padding: 12px 25px;
+      border-radius: 10px;
       border: none;
       cursor: pointer;
-      font-weight: bold;
+      font-weight: 600;
+      transition: all 0.2s;
     }
-    
+
     .confirm-btn {
       background: var(--primary);
       color: white;
     }
-    
+
+    .confirm-btn:hover {
+      background: var(--primary-dark);
+    }
+
     .cancel-btn {
-      background: #e0e0e0;
-      color: #555;
+      background: var(--light-gray);
+      color: var(--dark);
+    }
+
+    .cancel-btn:hover {
+      background: #dde4e6;
+    }
+
+    .instructions {
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 25px;
+      text-align: left;
+    }
+
+    .instructions h3 {
+      color: var(--primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .instructions ol {
+      padding-left: 20px;
+      color: var(--gray);
+    }
+
+    .instructions li {
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .highlight {
+      background: #fff8e1;
+      padding: 15px;
+      border-radius: 10px;
+      margin: 15px 0;
+      font-weight: 600;
+      color: var(--dark);
+      word-break: break-all;
+      text-align: center;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 20px;
+      }
+      
+      h1 {
+        font-size: 24px;
+      }
+      
+      .amount-btns {
+        grid-template-columns: 1fr;
+      }
+      
+      .modal-buttons {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1><i class="fas fa-dharmachakra"></i> Dussehra Mamul</h1>
-    <p>Offer your devotional contribution this Dussehra</p>
-
-    <div class="amount-btns">
-      <button class="amount-btn" data-amount="1">₹1</button>
-      <button class="amount-btn" data-amount="51">₹51</button>
-      <button class="amount-btn" data-amount="101">₹101</button>
-      <button class="amount-btn" data-amount="201">₹201</button>
-      <button class="amount-btn" data-amount="501">₹501</button>
-      <button class="amount-btn" data-amount="1001">₹1001</button>
+    <div class="header">
+      <h1><i class="fas fa-dharmachakra"></i> Dussehra Mamul</h1>
+      <p>Offer your devotional contribution this Dussehra festival</p>
     </div>
 
-    <div class="custom-amount">
-      <input type="number" id="customAmount" placeholder="Or enter custom amount">
+    <div class="amount-section">
+      <div class="amount-btns">
+        <button class="amount-btn" data-amount="1"><i class="fas fa-rupee-sign"></i> 1</button>
+        <button class="amount-btn" data-amount="51"><i class="fas fa-rupee-sign"></i> 51</button>
+        <button class="amount-btn" data-amount="101"><i class="fas fa-rupee-sign"></i> 101</button>
+        <button class="amount-btn" data-amount="201"><i class="fas fa-rupee-sign"></i> 201</button>
+        <button class="amount-btn" data-amount="501"><i class="fas fa-rupee-sign"></i> 501</button>
+        <button class="amount-btn" data-amount="1001"><i class="fas fa-rupee-sign"></i> 1001</button>
+      </div>
+
+      <div class="custom-amount">
+        <label for="customAmount">Or enter custom amount:</label>
+        <div class="input-group">
+          <span>₹</span>
+          <input type="number" id="customAmount" placeholder="Enter amount" min="1">
+        </div>
+      </div>
+
+      <button id="payButton" class="pay-btn">
+        <i class="fas fa-lock"></i> Pay Securely
+      </button>
     </div>
 
     <div id="paymentStatus" class="payment-status"></div>
 
+    <div class="instructions">
+      <h3><i class="fas fa-info-circle"></i> Payment Instructions</h3>
+      <ol>
+        <li>Select an amount or enter a custom amount</li>
+        <li>Click "Pay Securely" to proceed</li>
+        <li>You will be redirected to your UPI app</li>
+        <li>Complete the payment in your UPI app</li>
+        <li>Return to this page after payment</li>
+      </ol>
+      
+      <div class="highlight">
+        UPI ID: sudarshanbehera808080-2@okaxis
+      </div>
+    </div>
+
     <footer>
-      <i class="fas fa-shield-alt"></i> Secure UPI Payment
+      <i class="fas fa-shield-alt"></i> Secure UPI Payment • 256-bit Encryption
     </footer>
   </div>
 
   <div id="paymentModal" class="modal">
     <div class="modal-content">
-      <h2>Confirm Payment</h2>
-      <p>You are about to pay ₹<span id="confirmAmount">0</span> to Dussehra Mamul</p>
-      <p class="small">Make sure you have a UPI app installed on your device</p>
+      <h2><i class="fas fa-check-circle"></i> Confirm Payment</h2>
+      <p>You are about to pay <strong>₹<span id="confirmAmount">0</span></strong> to <strong>Dussehra Mamul</strong></p>
+      <p>Make sure you have a UPI app installed on your device</p>
+      
       <div class="modal-buttons">
         <button class="modal-btn cancel-btn" id="cancelPayment">Cancel</button>
-        <button class="modal-btn confirm-btn" id="confirmPayment">Pay Now</button>
+        <button class="modal-btn confirm-btn" id="confirmPayment">
+          <i class="fas fa-external-link-alt"></i> Open UPI App
+        </button>
       </div>
     </div>
   </div>
 
   <script>
-    const amountButtons = document.querySelectorAll('.amount-btn');
-    const customAmountInput = document.getElementById('customAmount');
-    const paymentStatus = document.getElementById('paymentStatus');
-    const paymentModal = document.getElementById('paymentModal');
-    const confirmAmount = document.getElementById('confirmAmount');
-    const cancelPaymentBtn = document.getElementById('cancelPayment');
-    const confirmPaymentBtn = document.getElementById('confirmPayment');
-    
-    let selectedAmount = 0;
-    
-    // Replace with your verified UPI ID
-    const upiID = "8328873021@postbank"; 
-    
-    // Common UPI apps for fallback
-    const upiApps = {
-      phonepe: 'phonepe://',
-      gpay: 'tez://',
-      paytm: 'paytmmp://',
-      bhim: 'bhim://'
-    };
-    
-    // Function to validate UPI ID format
-    function isValidUpiId(upiId) {
-      const upiRegex = /^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/;
-      return upiRegex.test(upiId);
-    }
-    
-    // Function to trigger UPI payment
-    function initiateUPIPayment(amount) {
-      if (!isValidUpiId(upiID)) {
-        showPaymentStatus("Invalid UPI ID. Please contact support.", "error");
-        return;
+    document.addEventListener('DOMContentLoaded', function() {
+      const amountButtons = document.querySelectorAll('.amount-btn');
+      const customAmountInput = document.getElementById('customAmount');
+      const payButton = document.getElementById('payButton');
+      const paymentStatus = document.getElementById('paymentStatus');
+      const paymentModal = document.getElementById('paymentModal');
+      const confirmAmount = document.getElementById('confirmAmount');
+      const cancelPaymentBtn = document.getElementById('cancelPayment');
+      const confirmPaymentBtn = document.getElementById('confirmPayment');
+      
+      let selectedAmount = 0;
+      let selectedButton = null;
+      
+      // Updated UPI ID
+      const upiID = "sudarshanbehera808080-2@okaxis"; 
+      
+      // Function to validate UPI ID format
+      function isValidUpiId(upiId) {
+        const upiRegex = /^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/;
+        return upiRegex.test(upiId);
       }
       
-      // Format amount to string without decimals for UPI
-      const formattedAmount = amount.toString();
+      // Function to show payment status
+      function showPaymentStatus(message, type) {
+        paymentStatus.textContent = message;
+        paymentStatus.className = `payment-status ${type}`;
+        paymentStatus.style.display = 'block';
+        
+        // Auto hide after 5 seconds
+        setTimeout(() => {
+          paymentStatus.style.display = 'none';
+        }, 5000);
+      }
       
-      // Create UPI link with proper parameters
-      const upiLink = `upi://pay?pa=${upiID}&pn=Dussehra%20Mamul&am=${formattedAmount}&cu=INR&tn=Dussehra%20Mamul%20Contribution`;
+      // Handle amount button clicks
+      amountButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          // Remove selected class from all buttons
+          amountButtons.forEach(btn => btn.classList.remove('selected'));
+          
+          // Add selected class to clicked button
+          button.classList.add('selected');
+          
+          // Set selected amount
+          selectedAmount = button.dataset.amount;
+          selectedButton = button;
+          
+          // Clear custom amount
+          customAmountInput.value = '';
+        });
+      });
       
-      // Try to open the UPI link
-      window.location.href = upiLink;
-      
-      // Set a timeout to check if the app opened
-      setTimeout(() => {
-        // If we're still on the page, the app likely didn't open
-        if (!document.hidden) {
-          showPaymentStatus("No UPI app found. Please install a UPI app like GPay, PhonePe, or Paytm.", "error");
-          showUPIAppsGuide();
+      // Handle custom amount input
+      customAmountInput.addEventListener('input', () => {
+        if (customAmountInput.value) {
+          // Remove selected class from amount buttons
+          amountButtons.forEach(btn => btn.classList.remove('selected'));
+          
+          // Set selected amount
+          selectedAmount = customAmountInput.value;
+          selectedButton = null;
         }
-      }, 1000);
-    }
-    
-    // Show guide for UPI apps if none is installed
-    function showUPIAppsGuide() {
-      paymentStatus.innerHTML += `
-        <p style="margin-top: 10px;">You can also manually open your UPI app and send to:</p>
-        <p style="font-weight: bold; word-break: break-all;">${upiID}</p>
-        <p>Amount: ₹${selectedAmount}</p>
-      `;
-    }
-    
-    // Show payment status message
-    function showPaymentStatus(message, type) {
-      paymentStatus.textContent = message;
-      paymentStatus.className = `payment-status ${type}`;
-      paymentStatus.style.display = 'block';
+      });
       
-      // Auto hide after 5 seconds
-      setTimeout(() => {
-        paymentStatus.style.display = 'none';
-      }, 5000);
-    }
-    
-    // Handle amount button clicks
-    amountButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        selectedAmount = button.dataset.amount;
+      // Handle pay button click
+      payButton.addEventListener('click', () => {
+        if (!selectedAmount || selectedAmount < 1) {
+          showPaymentStatus("Please select or enter an amount first", "error");
+          return;
+        }
+        
         confirmAmount.textContent = selectedAmount;
         paymentModal.style.display = 'flex';
       });
-    });
-    
-    // Handle custom amount input
-    customAmountInput.addEventListener('keyup', (e) => {
-      if (e.key === 'Enter') {
-        selectedAmount = customAmountInput.value;
-        if (selectedAmount > 0) {
-          confirmAmount.textContent = selectedAmount;
-          paymentModal.style.display = 'flex';
-        }
-      }
-    });
-    
-    // Handle payment confirmation
-    confirmPaymentBtn.addEventListener('click', () => {
-      paymentModal.style.display = 'none';
-      initiateUPIPayment(selectedAmount);
-    });
-    
-    // Handle payment cancellation
-    cancelPaymentBtn.addEventListener('click', () => {
-      paymentModal.style.display = 'none';
-    });
-    
-    // Check if page was reopened after UPI app redirect (payment success/failure)
-    window.addEventListener('pageshow', function(event) {
-      if (event.persisted) {
-        // Page was restored from bfcache, which might indicate returning from UPI app
-        const urlParams = new URLSearchParams(window.location.search);
-        const status = urlParams.get('payment');
+      
+      // Handle payment confirmation
+      confirmPaymentBtn.addEventListener('click', () => {
+        paymentModal.style.display = 'none';
         
-        if (status === 'success') {
-          showPaymentStatus("Payment successful! Thank you for your contribution.", "success");
-        } else if (status === 'failed') {
-          showPaymentStatus("Payment failed. Please try again.", "error");
+        if (!isValidUpiId(upiID)) {
+          showPaymentStatus("Invalid UPI ID. Please contact support.", "error");
+          return;
         }
-      }
+        
+        // Format amount to string without decimals for UPI
+        const formattedAmount = selectedAmount.toString();
+        
+        // Create UPI link with proper parameters
+        const upiLink = `upi://pay?pa=${upiID}&pn=Dussehra%20Mamul&am=${formattedAmount}&cu=INR&tn=Dussehra%20Mamul%20Contribution`;
+        
+        // Try to open the UPI link
+        window.location.href = upiLink;
+        
+        // Set a timeout to check if the app opened
+        setTimeout(() => {
+          // If we're still on the page, the app likely didn't open
+          if (!document.hidden) {
+            showPaymentStatus("No UPI app found. Please install a UPI app like GPay, PhonePe, or Paytm.", "error");
+          }
+        }, 1000);
+      });
+      
+      // Handle payment cancellation
+      cancelPaymentBtn.addEventListener('click', () => {
+        paymentModal.style.display = 'none';
+      });
+      
+      // Close modal if clicked outside
+      window.addEventListener('click', (event) => {
+        if (event.target === paymentModal) {
+          paymentModal.style.display = 'none';
+        }
+      });
     });
   </script>
 </body>
