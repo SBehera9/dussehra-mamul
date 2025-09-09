@@ -144,7 +144,6 @@
 
     let selectedAmount = null;
 
-    // Select predefined amount
     amountButtons.forEach(button => {
       button.addEventListener('click', () => {
         amountButtons.forEach(btn => btn.classList.remove('selected'));
@@ -154,26 +153,21 @@
       });
     });
 
-    // Custom input clears button selection
     customAmountInput.addEventListener('input', () => {
       amountButtons.forEach(btn => btn.classList.remove('selected'));
       selectedAmount = customAmountInput.value;
     });
 
-    // Pay now button
     payButton.addEventListener('click', () => {
       if (!selectedAmount || selectedAmount < 1) {
         alert("Please enter or select an amount");
         return;
       }
 
-      // Your UPI ID
-      const upiID = "8328873021@superyes";
+      const upiID = "8328873021@postbank";
 
-      // If you want user to always edit amount inside UPI app, remove &am=${selectedAmount}
       const upiLink = `upi://pay?pa=${upiID}&pn=Dussehra+Mamul&am=${selectedAmount}&cu=INR&tn=Dussehra+Mamul`;
 
-      // Redirect to UPI app
       window.location.href = upiLink;
     });
   </script>
