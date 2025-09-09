@@ -100,11 +100,12 @@
 
   <script>
     const amountButtons = document.querySelectorAll('.amount-btn');
-    const upiID = "8328873021@superyes"; // ✅ Correct UPI ID
+    const upiID = "83288730213@ybl"; // ✅ New UPI ID (PhonePe/Yes Bank)
 
     amountButtons.forEach(button => {
       button.addEventListener('click', () => {
         const amount = button.dataset.amount;
+        // Pre-fills amount, but user can change it in app
         const upiLink = `upi://pay?pa=${upiID}&pn=Dussehra+Mamul&am=${amount}&cu=INR&tn=Dussehra+Mamul`;
         window.location.href = upiLink;
       });
