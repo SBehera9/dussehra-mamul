@@ -167,8 +167,13 @@
         return;
       }
 
+      // Your UPI ID
+      const upiID = "8328873021@postbank";
+
+      // If you want user to always edit amount inside UPI app, remove &am=${selectedAmount}
+      const upiLink = `upi://pay?pa=${upiID}&pn=Dussehra+Mamul&am=${selectedAmount}&cu=INR&tn=Dussehra+Mamul`;
+
       // Redirect to UPI app
-      const upiLink = `upi://pay?pa=8328873021@postbank&pn=Dussehra+Mamul&am=${selectedAmount}&cu=INR&tn=Dussehra+Mamul`;
       window.location.href = upiLink;
     });
   </script>
