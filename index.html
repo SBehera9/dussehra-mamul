@@ -174,7 +174,7 @@
     <div class="qr-section">
       <p>Tap QR code to pay</p>
       <div class="qr-container" id="qrContainer">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?data=upi://pay?pa=83288730213@ybl&pn=Dussehra+Mamul&am=101&cu=INR&tn=Dussehra+Mamul&size=200x200" 
+        <img src="https://api.qrserver.com/v1/create-qr-code/?data=upi://pay?pa=83288730213@ybl&pn=Dussehra+Mamul&cu=INR&tn=Dussehra+Mamul&size=200x200" 
              alt="UPI QR Code" id="qrImage"/>
       </div>
     </div>
@@ -188,12 +188,11 @@
     document.addEventListener('DOMContentLoaded', function() {
       const amountButtons = document.querySelectorAll('.amount-btn');
       const qrContainer = document.getElementById('qrContainer');
-      const qrImage = document.getElementById('qrImage');
 
       const upiId = "83288730213@ybl"; 
       const name = "Dussehra Mamul";
 
-      // On amount button click → redirect to UPI
+      // On amount button click → redirect with fixed amount
       amountButtons.forEach(button => {
         button.addEventListener('click', function() {
           const amount = this.dataset.amount;
@@ -201,10 +200,9 @@
         });
       });
 
-      // On QR tap → redirect to UPI (default amount 101)
+      // On QR tap → redirect without amount (user types manually)
       qrContainer.addEventListener('click', function() {
-        const amount = 101;
-        window.location.href = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(name)}`;
+        window.location.href = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&cu=INR&tn=${encodeURIComponent(name)}`;
       });
     });
   </script>
