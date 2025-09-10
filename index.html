@@ -167,7 +167,7 @@
     <div class="qr-section">
       <p>Or tap the QR to pay (enter amount in your app)</p>
       <div class="qr-container" id="qrContainer">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?data=upi://pay?pa=83288730213@ybl&pn=Dussehra+Mamul&cu=INR&size=200x200" 
+        <img src="https://api.qrserver.com/v1/create-qr-code/?data=upi://pay?pa=8328873021-2@axl&pn=Dussehra+Mamul&cu=INR&size=200x200" 
              alt="UPI QR Code" id="qrImage"/>
       </div>
     </div>
@@ -186,13 +186,13 @@
       amountButtons.forEach(button => {
         button.addEventListener('click', function() {
           const selectedAmount = this.dataset.amount;
-          window.location.href = `upi://pay?pa=83288730213@ybl&pn=Dussehra+Mamul&am=${selectedAmount}&cu=INR`;
+          window.location.href = `upi://pay?pa=8328873021-2@axl&pn=Dussehra+Mamul&am=${selectedAmount}&cu=INR`;
         });
       });
 
       // Handle QR click → redirect without fixed amount
       qrContainer.addEventListener('click', () => {
-        window.location.href = `upi://pay?pa=83288730213@ybl&pn=Dussehra+Mamul&cu=INR`;
+        window.location.href = `upi://pay?pa=8328873021-2@axl&pn=Dussehra+Mamul&cu=INR`;
       });
     });
   </script>
