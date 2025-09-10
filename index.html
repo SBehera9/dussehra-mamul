@@ -94,7 +94,7 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
 
     .amount-btn {
@@ -110,50 +110,7 @@
     }
 
     .amount-btn:hover { border-color: var(--primary-light); transform: translateY(-2px); }
-    .amount-btn.selected {
-      background: var(--primary-light);
-      color: white;
-      border-color: var(--primary-light);
-      box-shadow: 0 5px 15px rgba(230, 126, 34, 0.3);
-    }
-
-    .custom-input {
-      display: flex;
-      align-items: center;
-      background: #fafafa;
-      border: 2px solid #eee;
-      border-radius: 10px;
-      padding: 5px 12px;
-      margin-top: 8px;
-    }
-
-    .custom-input span { color: var(--dark); font-weight: 600; }
-    .custom-input input {
-      flex: 1;
-      border: none;
-      background: transparent;
-      padding: 10px;
-      font-size: 15px;
-      outline: none;
-      text-align: right;
-    }
-
-    .pay-btn {
-      display: block;
-      width: 100%;
-      padding: 15px;
-      margin: 20px 0 15px;
-      font-size: 16px;
-      font-weight: bold;
-      color: white;
-      background: var(--primary);
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.3s;
-      box-shadow: 0 5px 18px rgba(211, 84, 0, 0.4);
-    }
-    .pay-btn:hover { background: var(--primary-light); transform: translateY(-3px); }
+    .amount-btn:active { background: var(--primary-light); color: #fff; }
 
     .divider {
       display: flex;
@@ -177,6 +134,7 @@
       background: white;
       border-radius: 14px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      cursor: pointer;
     }
     .qr-container img { width: 170px; height: 170px; border-radius: 10px; }
 
@@ -187,65 +145,6 @@
       text-align: center;
     }
     .secure-notice { margin-bottom: 8px; color: var(--secondary); font-weight: 600; }
-    .vpa {
-      background: #f3f3f3;
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-family: monospace;
-      font-size: 12px;
-      display: inline-block;
-    }
-
-    .confirmation {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      justify-content: center;
-      align-items: center;
-      z-index: 100;
-      padding: 20px;
-    }
-    .confirmation-content {
-      background: white;
-      padding: 25px;
-      border-radius: 18px;
-      text-align: center;
-      max-width: 360px;
-      width: 100%;
-      animation: popIn 0.4s ease;
-    }
-    @keyframes popIn {
-      from { transform: scale(0.85); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-    .confirmation-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 20px;
-    }
-    .confirmation-buttons button {
-      padding: 10px 18px;
-      border: none;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-size: 14px;
-    }
-    .confirm-btn { background: var(--secondary); color: white; }
-    .cancel-btn { background: #f3f3f3; color: var(--dark); }
-
-    @media (max-width: 480px) {
-      .container { padding: 20px; border-radius: 16px; }
-      h1 { font-size: 22px; }
-      p { font-size: 14px; }
-      .amount-btn { padding: 10px; font-size: 14px; }
-      .pay-btn { padding: 14px; font-size: 15px; }
-      .qr-container img { width: 150px; height: 150px; }
-    }
   </style>
 </head>
 <body>
@@ -262,24 +161,19 @@
         <i class="fas fa-indian-rupee-sign"></i> <span>Select Offering Amount</span>
       </div>
       <div class="amount-options">
+        <button class="amount-btn" data-amount="1">₹1</button>
         <button class="amount-btn" data-amount="51">₹51</button>
         <button class="amount-btn" data-amount="101">₹101</button>
         <button class="amount-btn" data-amount="251">₹251</button>
         <button class="amount-btn" data-amount="501">₹501</button>
       </div>
-      <div class="custom-input">
-        <span>₹</span>
-        <input type="number" id="customAmount" placeholder="Other amount" min="1"/>
-      </div>
     </div>
-
-    <button class="pay-btn" id="payButton"><i class="fas fa-hand-holding-heart"></i> Continue to Pay</button>
 
     <div class="divider"><span>OR</span></div>
 
     <div class="qr-section">
-      <p>Scan QR code to pay</p>
-      <div class="qr-container">
+      <p>Tap QR code to pay</p>
+      <div class="qr-container" id="qrContainer">
         <img src="https://api.qrserver.com/v1/create-qr-code/?data=upi://pay?pa=83288730213@ybl&pn=Dussehra+Mamul&am=101&cu=INR&tn=Dussehra+Mamul&size=200x200" 
              alt="UPI QR Code" id="qrImage"/>
       </div>
@@ -287,69 +181,30 @@
 
     <footer>
       <div class="secure-notice"><i class="fas fa-shield-alt"></i> Secure UPI Payment</div>
-      <div class="vpa">UPI ID: 83288730213@ybl</div>
     </footer>
-  </div>
-
-  <div class="confirmation" id="confirmation">
-    <div class="confirmation-content">
-      <h2>Confirm Your Offering</h2>
-      <p>You are about to pay <span id="confirmAmount" style="font-weight: bold; color: var(--primary);">₹101</span> for Dussehra Mamul</p>
-      <div class="confirmation-buttons">
-        <button class="cancel-btn" id="cancelButton">Cancel</button>
-        <button class="confirm-btn" id="confirmButton">Confirm</button>
-      </div>
-    </div>
   </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const amountButtons = document.querySelectorAll('.amount-btn');
-      const customAmountInput = document.getElementById('customAmount');
-      const payButton = document.getElementById('payButton');
+      const qrContainer = document.getElementById('qrContainer');
       const qrImage = document.getElementById('qrImage');
-      const confirmationModal = document.getElementById('confirmation');
-      const confirmAmount = document.getElementById('confirmAmount');
-      const cancelButton = document.getElementById('cancelButton');
-      const confirmButton = document.getElementById('confirmButton');
-      let selectedAmount = 101; 
-      document.querySelector('[data-amount="101"]').classList.add('selected');
 
+      const upiId = "83288730213@ybl"; 
+      const name = "Dussehra Mamul";
+
+      // On amount button click → redirect to UPI
       amountButtons.forEach(button => {
         button.addEventListener('click', function() {
-          amountButtons.forEach(btn => btn.classList.remove('selected'));
-          this.classList.add('selected');
-          selectedAmount = this.dataset.amount;
-          customAmountInput.value = '';
-          updateQrCode(selectedAmount);
+          const amount = this.dataset.amount;
+          window.location.href = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(name)}`;
         });
       });
 
-      customAmountInput.addEventListener('input', function() {
-        if (this.value) {
-          amountButtons.forEach(btn => btn.classList.remove('selected'));
-          selectedAmount = this.value;
-          updateQrCode(selectedAmount);
-        }
-      });
-
-      payButton.addEventListener('click', () => {
-        confirmAmount.textContent = `₹${selectedAmount}`;
-        confirmationModal.style.display = 'flex';
-      });
-
-      cancelButton.addEventListener('click', () => confirmationModal.style.display = 'none');
-
-      confirmButton.addEventListener('click', () => {
-        window.location.href = `upi://pay?pa=83288730213@ybl&pn=Dussehra+Mamul&am=${selectedAmount}&cu=INR&tn=Dussehra+Mamul`;
-      });
-
-      function updateQrCode(amount) {
-        qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?data=upi://pay?pa=83288730213@ybl&pn=Dussehra+Mamul&am=${amount}&cu=INR&tn=Dussehra+Mamul&size=200x200`;
-      }
-
-      window.addEventListener('click', e => {
-        if (e.target === confirmationModal) confirmationModal.style.display = 'none';
+      // On QR tap → redirect to UPI (default amount 101)
+      qrContainer.addEventListener('click', function() {
+        const amount = 101;
+        window.location.href = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(name)}`;
       });
     });
   </script>
