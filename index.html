@@ -1,113 +1,355 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dussehra Mamul Payment</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <style>
     :root {
-      --primary: #e67e22;
-      --primary-dark: #d35400;
+      --primary: #d35400;
+      --primary-light: #e67e22;
+      --secondary: #16a085;
       --light: #fff;
       --dark: #2c3e50;
       --gray: #7f8c8d;
       --gradient: linear-gradient(135deg, #ffecd2, #fcb69f);
-      --shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     }
 
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      font-family: "Segoe UI", sans-serif;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       background: var(--gradient);
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
       padding: 20px;
     }
 
     .container {
       background: var(--light);
       padding: 28px;
-      border-radius: 18px;
-      box-shadow: var(--shadow);
+      border-radius: 20px;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
       text-align: center;
-      max-width: 400px;
+      max-width: 460px;
       width: 100%;
+      animation: fadeIn 0.8s ease-in-out;
+      position: relative;
+      overflow: hidden;
     }
+
+    .container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: var(--primary-light);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .festive-header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 12px;
+      color: var(--primary);
+    }
+
+    .festive-header i { margin: 0 8px; font-size: 26px; }
 
     h1 {
       color: var(--primary);
       font-size: 26px;
-      margin-bottom: 10px;
+      font-weight: 700;
     }
 
     p {
       color: var(--gray);
-      font-size: 14px;
-      margin-bottom: 20px;
+      margin: 12px 0 18px;
+      line-height: 1.6;
+      font-size: 15px;
     }
 
-    .amount-btns {
+    .amount-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 15px;
+      color: var(--dark);
+      font-weight: 600;
+      font-size: 16px;
+    }
+    .amount-title i { margin-right: 8px; }
+
+    .amount-options {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
 
     .amount-btn {
-      padding: 14px;
-      font-size: 16px;
-      border-radius: 10px;
+      padding: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--dark);
+      background: #fdfdfd;
       border: 2px solid #eee;
-      background: #fafafa;
+      border-radius: 10px;
       cursor: pointer;
-      transition: 0.3s;
-      font-weight: bold;
+      transition: all 0.3s;
     }
 
-    .amount-btn:hover {
-      background: var(--primary);
-      color: #fff;
-      border-color: var(--primary);
+    .amount-btn:hover { border-color: var(--primary-light); transform: translateY(-2px); }
+    .amount-btn.selected {
+      background: var(--primary-light);
+      color: white;
+      border-color: var(--primary-light);
+      box-shadow: 0 5px 15px rgba(230, 126, 34, 0.3);
     }
+
+    .custom-input {
+      display: flex;
+      align-items: center;
+      background: #fafafa;
+      border: 2px solid #eee;
+      border-radius: 10px;
+      padding: 5px 12px;
+      margin-top: 8px;
+    }
+
+    .custom-input span { color: var(--dark); font-weight: 600; }
+    .custom-input input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 10px;
+      font-size: 15px;
+      outline: none;
+      text-align: right;
+    }
+
+    .pay-btn {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      margin: 20px 0 15px;
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+      background: var(--primary);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 5px 18px rgba(211, 84, 0, 0.4);
+    }
+    .pay-btn:hover { background: var(--primary-light); transform: translateY(-3px); }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 15px 0;
+      color: var(--gray);
+      font-size: 13px;
+    }
+    .divider::before, .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #eee;
+    }
+    .divider span { padding: 0 12px; }
+
+    .qr-section p { margin-bottom: 8px; font-size: 14px; color: var(--dark); }
+    .qr-container {
+      display: inline-block;
+      padding: 12px;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    }
+    .qr-container img { width: 170px; height: 170px; border-radius: 10px; }
 
     footer {
       margin-top: 20px;
       font-size: 13px;
       color: var(--gray);
+      text-align: center;
+    }
+    .secure-notice { margin-bottom: 8px; color: var(--secondary); font-weight: 600; }
+    .vpa {
+      background: #f3f3f3;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 12px;
+      display: inline-block;
+    }
+
+    .confirmation {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      padding: 20px;
+    }
+    .confirmation-content {
+      background: white;
+      padding: 25px;
+      border-radius: 18px;
+      text-align: center;
+      max-width: 360px;
+      width: 100%;
+      animation: popIn 0.4s ease;
+    }
+    @keyframes popIn {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .confirmation-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .confirmation-buttons button {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 14px;
+    }
+    .confirm-btn { background: var(--secondary); color: white; }
+    .cancel-btn { background: #f3f3f3; color: var(--dark); }
+
+    @media (max-width: 480px) {
+      .container { padding: 20px; border-radius: 16px; }
+      h1 { font-size: 22px; }
+      p { font-size: 14px; }
+      .amount-btn { padding: 10px; font-size: 14px; }
+      .pay-btn { padding: 14px; font-size: 15px; }
+      .qr-container img { width: 150px; height: 150px; }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1><i class="fas fa-dharmachakra"></i> Dussehra Mamul</h1>
-    <p>Offer your devotional contribution this Dussehra</p>
+    <div class="festive-header">
+      <i class="fas fa-dharmachakra"></i>
+      <h1>Dussehra Mamul</h1>
+      <i class="fas fa-dharmachakra"></i>
+    </div>
+    <p>Offer your devotional contribution this Dussehra. Your support is greatly appreciated.</p>
 
-    <div class="amount-btns">
-      <button class="amount-btn" data-amount="1">₹1</button>
-      <button class="amount-btn" data-amount="51">₹51</button>
-      <button class="amount-btn" data-amount="101">₹101</button>
-      <button class="amount-btn" data-amount="201">₹201</button>
-      <button class="amount-btn" data-amount="501">₹501</button>
-      <button class="amount-btn" data-amount="1001">₹1001</button>
+    <div class="amount-selector">
+      <div class="amount-title">
+        <i class="fas fa-indian-rupee-sign"></i> <span>Select Offering Amount</span>
+      </div>
+      <div class="amount-options">
+        <button class="amount-btn" data-amount="51">₹51</button>
+        <button class="amount-btn" data-amount="101">₹101</button>
+        <button class="amount-btn" data-amount="251">₹251</button>
+        <button class="amount-btn" data-amount="501">₹501</button>
+      </div>
+      <div class="custom-input">
+        <span>₹</span>
+        <input type="number" id="customAmount" placeholder="Other amount" min="1"/>
+      </div>
+    </div>
+
+    <button class="pay-btn" id="payButton"><i class="fas fa-hand-holding-heart"></i> Continue to Pay</button>
+
+    <div class="divider"><span>OR</span></div>
+
+    <div class="qr-section">
+      <p>Scan QR code to pay</p>
+      <div class="qr-container">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?data=upi://pay?pa=83288730213@ybl&pn=Dussehra+Mamul&am=101&cu=INR&tn=Dussehra+Mamul&size=200x200" 
+             alt="UPI QR Code" id="qrImage"/>
+      </div>
     </div>
 
     <footer>
-      <i class="fas fa-shield-alt"></i> Secure UPI Payment
+      <div class="secure-notice"><i class="fas fa-shield-alt"></i> Secure UPI Payment</div>
+      <div class="vpa">UPI ID: 83288730213@ybl</div>
     </footer>
   </div>
 
-  <script>
-    const amountButtons = document.querySelectorAll('.amount-btn');
-    const upiID = "83288730213@ybl"; // ✅ New UPI ID (PhonePe/Yes Bank)
+  <div class="confirmation" id="confirmation">
+    <div class="confirmation-content">
+      <h2>Confirm Your Offering</h2>
+      <p>You are about to pay <span id="confirmAmount" style="font-weight: bold; color: var(--primary);">₹101</span> for Dussehra Mamul</p>
+      <div class="confirmation-buttons">
+        <button class="cancel-btn" id="cancelButton">Cancel</button>
+        <button class="confirm-btn" id="confirmButton">Confirm</button>
+      </div>
+    </div>
+  </div>
 
-    amountButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const amount = button.dataset.amount;
-        // Pre-fills amount, but user can change it in app
-        const upiLink = `upi://pay?pa=${upiID}&pn=Dussehra+Mamul&am=${amount}&cu=INR&tn=Dussehra+Mamul`;
-        window.location.href = upiLink;
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const amountButtons = document.querySelectorAll('.amount-btn');
+      const customAmountInput = document.getElementById('customAmount');
+      const payButton = document.getElementById('payButton');
+      const qrImage = document.getElementById('qrImage');
+      const confirmationModal = document.getElementById('confirmation');
+      const confirmAmount = document.getElementById('confirmAmount');
+      const cancelButton = document.getElementById('cancelButton');
+      const confirmButton = document.getElementById('confirmButton');
+      let selectedAmount = 101; 
+      document.querySelector('[data-amount="101"]').classList.add('selected');
+
+      amountButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          amountButtons.forEach(btn => btn.classList.remove('selected'));
+          this.classList.add('selected');
+          selectedAmount = this.dataset.amount;
+          customAmountInput.value = '';
+          updateQrCode(selectedAmount);
+        });
+      });
+
+      customAmountInput.addEventListener('input', function() {
+        if (this.value) {
+          amountButtons.forEach(btn => btn.classList.remove('selected'));
+          selectedAmount = this.value;
+          updateQrCode(selectedAmount);
+        }
+      });
+
+      payButton.addEventListener('click', () => {
+        confirmAmount.textContent = `₹${selectedAmount}`;
+        confirmationModal.style.display = 'flex';
+      });
+
+      cancelButton.addEventListener('click', () => confirmationModal.style.display = 'none');
+
+      confirmButton.addEventListener('click', () => {
+        window.location.href = `upi://pay?pa=83288730213@ybl&pn=Dussehra+Mamul&am=${selectedAmount}&cu=INR&tn=Dussehra+Mamul`;
+      });
+
+      function updateQrCode(amount) {
+        qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?data=upi://pay?pa=83288730213@ybl&pn=Dussehra+Mamul&am=${amount}&cu=INR&tn=Dussehra+Mamul&size=200x200`;
+      }
+
+      window.addEventListener('click', e => {
+        if (e.target === confirmationModal) confirmationModal.style.display = 'none';
       });
     });
   </script>
