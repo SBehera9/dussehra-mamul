@@ -92,7 +92,7 @@
 
     .amount-options {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 12px;
       margin-bottom: 20px;
     }
@@ -109,23 +109,10 @@
       transition: all 0.3s;
     }
 
-    .amount-btn:hover { border-color: var(--primary-light); transform: translateY(-2px); }
-    .amount-btn:active { background: var(--primary-light); color: #fff; }
-
-    .divider {
-      display: flex;
-      align-items: center;
-      margin: 15px 0;
-      color: var(--gray);
-      font-size: 13px;
+    .amount-btn:hover { 
+      border-color: var(--primary-light); 
+      transform: translateY(-2px); 
     }
-    .divider::before, .divider::after {
-      content: "";
-      flex: 1;
-      height: 1px;
-      background: #eee;
-    }
-    .divider span { padding: 0 12px; }
 
     .qr-section p { margin-bottom: 8px; font-size: 14px; color: var(--dark); }
     .qr-container {
@@ -145,6 +132,14 @@
       text-align: center;
     }
     .secure-notice { margin-bottom: 8px; color: var(--secondary); font-weight: 600; }
+
+    @media (max-width: 480px) {
+      .container { padding: 20px; border-radius: 16px; }
+      h1 { font-size: 22px; }
+      p { font-size: 14px; }
+      .amount-btn { padding: 10px; font-size: 14px; }
+      .qr-container img { width: 150px; height: 150px; }
+    }
   </style>
 </head>
 <body>
@@ -169,12 +164,10 @@
       </div>
     </div>
 
-    <div class="divider"><span>OR</span></div>
-
     <div class="qr-section">
-      <p>Tap QR code to pay</p>
+      <p>Or tap the QR to pay (enter amount in your app)</p>
       <div class="qr-container" id="qrContainer">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?data=upi://pay?pa=83288730213@ybl&pn=Dussehra+Mamul&cu=INR&tn=Dussehra+Mamul&size=200x200" 
+        <img src="https://api.qrserver.com/v1/create-qr-code/?data=upi://pay?pa=83288730213@ybl&pn=Dussehra+Mamul&cu=INR&size=200x200" 
              alt="UPI QR Code" id="qrImage"/>
       </div>
     </div>
@@ -189,20 +182,17 @@
       const amountButtons = document.querySelectorAll('.amount-btn');
       const qrContainer = document.getElementById('qrContainer');
 
-      const upiId = "83288730213@ybl"; 
-      const name = "Dussehra Mamul";
-
-      // On amount button click → redirect with fixed amount
+      // Handle amount button clicks → redirect with fixed amount
       amountButtons.forEach(button => {
         button.addEventListener('click', function() {
-          const amount = this.dataset.amount;
-          window.location.href = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(name)}`;
+          const selectedAmount = this.dataset.amount;
+          window.location.href = `upi://pay?pa=83288730213@ybl&pn=Dussehra+Mamul&am=${selectedAmount}&cu=INR`;
         });
       });
 
-      // On QR tap → redirect without amount (user types manually)
-      qrContainer.addEventListener('click', function() {
-        window.location.href = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&cu=INR&tn=${encodeURIComponent(name)}`;
+      // Handle QR click → redirect without fixed amount
+      qrContainer.addEventListener('click', () => {
+        window.location.href = `upi://pay?pa=83288730213@ybl&pn=Dussehra+Mamul&cu=INR`;
       });
     });
   </script>
