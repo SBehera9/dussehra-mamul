@@ -79,41 +79,6 @@
       font-size: 15px;
     }
 
-    .amount-title {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 15px;
-      color: var(--dark);
-      font-weight: 600;
-      font-size: 16px;
-    }
-    .amount-title i { margin-right: 8px; }
-
-    .amount-options {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .amount-btn {
-      padding: 12px;
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--dark);
-      background: #fdfdfd;
-      border: 2px solid #eee;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .amount-btn:hover { 
-      border-color: var(--primary-light); 
-      transform: translateY(-2px); 
-    }
-
     .qr-section p { margin-bottom: 8px; font-size: 14px; color: var(--dark); }
     .qr-container {
       display: inline-block;
@@ -137,7 +102,6 @@
       .container { padding: 20px; border-radius: 16px; }
       h1 { font-size: 22px; }
       p { font-size: 14px; }
-      .amount-btn { padding: 10px; font-size: 14px; }
       .qr-container img { width: 150px; height: 150px; }
     }
   </style>
@@ -151,23 +115,11 @@
     </div>
     <p>Offer your devotional contribution this Dussehra. Your support is greatly appreciated.</p>
 
-    <div class="amount-selector">
-      <div class="amount-title">
-        <i class="fas fa-indian-rupee-sign"></i> <span>Select Offering Amount</span>
-      </div>
-      <div class="amount-options">
-        <button class="amount-btn" data-amount="1">₹1</button>
-        <button class="amount-btn" data-amount="51">₹51</button>
-        <button class="amount-btn" data-amount="101">₹101</button>
-        <button class="amount-btn" data-amount="251">₹251</button>
-        <button class="amount-btn" data-amount="501">₹501</button>
-      </div>
-    </div>
-
     <div class="qr-section">
-      <p>Or tap the QR to pay (enter amount in your app)</p>
+      <p>Tap the QR to pay (enter amount in your UPI app)</p>
       <div class="qr-container" id="qrContainer">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?data=upi://pay?pa=8328873021-2@axl&pn=Dussehra+Mamul&cu=INR&size=200x200" 
+        <!-- Embedded base64 QR -->
+        <img src="qr.jpg" 
              alt="UPI QR Code" id="qrImage"/>
       </div>
     </div>
@@ -179,20 +131,10 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const amountButtons = document.querySelectorAll('.amount-btn');
       const qrContainer = document.getElementById('qrContainer');
-
-      // Handle amount button clicks → redirect with fixed amount
-      amountButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          const selectedAmount = this.dataset.amount;
-          window.location.href = `upi://pay?pa=8328873021-2@axl&pn=Dussehra+Mamul&am=${selectedAmount}&cu=INR`;
-        });
-      });
-
-      // Handle QR click → redirect without fixed amount
+      // Redirect to UPI app (no fixed amount)
       qrContainer.addEventListener('click', () => {
-        window.location.href = `upi://pay?pa=8328873021-2@axl&pn=Dussehra+Mamul&cu=INR`;
+        window.location.href = `upi://pay`;
       });
     });
   </script>
