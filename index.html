@@ -1,142 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dussehra Mamul Payment</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-  <style>
-    :root {
-      --primary: #d35400;
-      --primary-light: #e67e22;
-      --secondary: #16a085;
-      --light: #fff;
-      --dark: #2c3e50;
-      --gray: #7f8c8d;
-      --gradient: linear-gradient(135deg, #ffecd2, #fcb69f);
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: var(--gradient);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-
-    .container {
-      background: var(--light);
-      padding: 28px;
-      border-radius: 20px;
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
-      text-align: center;
-      max-width: 460px;
-      width: 100%;
-      animation: fadeIn 0.8s ease-in-out;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .container::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 6px;
-      background: var(--primary-light);
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .festive-header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 12px;
-      color: var(--primary);
-    }
-
-    .festive-header i { margin: 0 8px; font-size: 26px; }
-
-    h1 {
-      color: var(--primary);
-      font-size: 26px;
-      font-weight: 700;
-    }
-
-    p {
-      color: var(--gray);
-      margin: 12px 0 18px;
-      line-height: 1.6;
-      font-size: 15px;
-    }
-
-    .qr-section p { margin-bottom: 8px; font-size: 14px; color: var(--dark); }
-    .qr-container {
-      display: inline-block;
-      padding: 12px;
-      background: white;
-      border-radius: 14px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-      cursor: pointer;
-    }
-    .qr-container img { width: 170px; height: 170px; border-radius: 10px; }
-
-    footer {
-      margin-top: 20px;
-      font-size: 13px;
-      color: var(--gray);
-      text-align: center;
-    }
-    .secure-notice { margin-bottom: 8px; color: var(--secondary); font-weight: 600; }
-
-    @media (max-width: 480px) {
-      .container { padding: 20px; border-radius: 16px; }
-      h1 { font-size: 22px; }
-      p { font-size: 14px; }
-      .qr-container img { width: 150px; height: 150px; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dussehra Mamul</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ff9933 0%, #ff6600 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+        
+        h1 {
+            color: #ff6600;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .description {
+            text-align: justify;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            color: #555;
+        }
+        
+        .amount-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 25px 0;
+        }
+        
+        .amount-btn {
+            background: linear-gradient(to bottom, #ff9933, #ff6600);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 15px 5px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .amount-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .amount-btn:active {
+            transform: translateY(0);
+        }
+        
+        .payment-list {
+            margin-top: 30px;
+            border-top: 2px dashed #ff9933;
+            padding-top: 20px;
+        }
+        
+        .payment-list h2 {
+            color: #ff6600;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .payment-item {
+            background-color: #fff8f0;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .payment-name {
+            font-weight: bold;
+            color: #ff6600;
+        }
+        
+        .payment-amount {
+            font-weight: bold;
+            color: #339900;
+        }
+        
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            color: white;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 500px) {
+            .amount-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="festive-header">
-      <i class="fas fa-dharmachakra"></i>
-      <h1>Dussehra Mamul</h1>
-      <i class="fas fa-dharmachakra"></i>
+    <div class="container">
+        <h1>Dussehra Mamul</h1>
+        
+        <div class="description">
+            <p>Dussehra, also known as Vijayadashami, is one of the most important Hindu festivals celebrated in India. It symbolizes the victory of good over evil, commemorating Lord Rama's victory over the demon king Ravana. The festival is marked by Ram Lila performances, burning of Ravana effigies, exchanging gifts, and seeking blessings from elders.</p>
+        </div>
+        
+        <div class="amount-buttons">
+            <button class="amount-btn" data-amount="1">₹1</button>
+            <button class="amount-btn" data-amount="11">₹11</button>
+            <button class="amount-btn" data-amount="51">₹51</button>
+            <button class="amount-btn" data-amount="101">₹101</button>
+            <button class="amount-btn" data-amount="201">₹201</button>
+            <button class="amount-btn" data-amount="501">₹501</button>
+            <button class="amount-btn" data-amount="1001">₹1001</button>
+        </div>
+        
+        <div class="payment-list">
+            <h2>Recent Contributions</h2>
+            <div id="payment-list-container">
+                <!-- Payment items will be generated here -->
+            </div>
+        </div>
     </div>
-    <p>Offer your devotional contribution this Dussehra. Your support is greatly appreciated.</p>
-
-    <div class="qr-section">
-      <p>Tap the QR to pay (enter amount in your UPI app)</p>
-      <div class="qr-container" id="qrContainer">
-        <!-- Embedded base64 QR -->
-        <img src="qr.jpg" 
-             alt="UPI QR Code" id="qrImage"/>
-      </div>
+    
+    <div class="footer">
+        <p>Celebrate the spirit of Dussehra with your contribution</p>
     </div>
 
-    <footer>
-      <div class="secure-notice"><i class="fas fa-shield-alt"></i> Secure UPI Payment</div>
-    </footer>
-  </div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const qrContainer = document.getElementById('qrContainer');
-      // Redirect to UPI app (no fixed amount)
-      qrContainer.addEventListener('click', () => {
-        window.location.href = `upi://pay`;
-      });
-    });
-  </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sample data for payments
+            const names = [
+                "Amit Kumar", "Rajesh Sharma", "Priya Singh", "Sneha Patel", 
+                "Vikram Malhotra", "Anjali Mehta", "Rahul Kapoor", "Neha Gupta",
+                "Sanjay Verma", "Kavita Joshi", "Alok Pandey", "Divya Reddy"
+            ];
+            
+            const amounts = [1, 11, 51, 101, 201, 501, 1001];
+            
+            // Generate random payment list
+            function generatePaymentList() {
+                const container = document.getElementById('payment-list-container');
+                container.innerHTML = '';
+                
+                // Shuffle names array
+                const shuffledNames = [...names].sort(() => Math.random() - 0.5);
+                
+                // Create 6-8 random payment entries
+                const count = 6 + Math.floor(Math.random() * 3);
+                
+                for (let i = 0; i < count; i++) {
+                    const name = shuffledNames[i % shuffledNames.length];
+                    const amount = amounts[Math.floor(Math.random() * amounts.length)];
+                    
+                    // Mask the name (e.g., "Amit Kumar" becomes "A*** K****")
+                    const maskedName = name.split(' ').map(part => {
+                        return part[0] + '*'.repeat(part.length - 1);
+                    }).join(' ');
+                    
+                    const paymentItem = document.createElement('div');
+                    paymentItem.className = 'payment-item';
+                    paymentItem.innerHTML = `
+                        <span class="payment-name">${maskedName}</span>
+                        <span class="payment-amount">paid ₹${amount}</span>
+                    `;
+                    
+                    container.appendChild(paymentItem);
+                }
+            }
+            
+            // Set up UPI payment buttons
+            document.querySelectorAll('.amount-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const amount = this.getAttribute('data-amount');
+                    const upiId = '8328873021@postbank';
+                    
+                    // Create UPI URL
+                    const upiUrl = `upi://pay?pa=${upiId}&am=${amount}&cu=INR&tn=Dussehra Mamul`;
+                    
+                    // Redirect to UPI
+                    window.location.href = upiUrl;
+                    
+                    // Refresh page after a short delay (simulating payment completion)
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 3000);
+                });
+            });
+            
+            // Generate initial payment list
+            generatePaymentList();
+        });
+    </script>
 </body>
 </html>
