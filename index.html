@@ -1,362 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dussehra Mamul</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #ff9933 0%, #ff6600 100%);
-            color: #333;
-            min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .container {
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            width: 100%;
-            max-width: 500px;
-            padding: 30px;
-            margin: 20px 0;
-            position: relative;
-        }
-        
-        h1 {
-            color: #ff6600;
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 2.5rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-        }
-        
-        .description {
-            text-align: justify;
-            line-height: 1.6;
-            margin-bottom: 25px;
-            color: #555;
-        }
-        
-        .amount-buttons {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin: 25px 0;
-        }
-        
-        .amount-btn {
-            background: linear-gradient(to bottom, #ff9933, #ff6600);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 15px 5px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        
-        .amount-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-        }
-        
-        .amount-btn:active {
-            transform: translateY(0);
-        }
-        
-        .payment-list {
-            margin-top: 30px;
-            border-top: 2px dashed #ff9933;
-            padding-top: 20px;
-        }
-        
-        .payment-list h2 {
-            color: #ff6600;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        
-        .payment-item {
-            background-color: #fff8f0;
-            border-radius: 8px;
-            padding: 12px 15px;
-            margin-bottom: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .payment-name {
-            font-weight: bold;
-            color: #ff6600;
-        }
-        
-        .payment-amount {
-            font-weight: bold;
-            color: #339900;
-        }
-        
-        .footer {
-            margin-top: 20px;
-            text-align: center;
-            color: white;
-            font-size: 0.9rem;
-        }
-        
-        .error-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 100;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .error-content {
-            background-color: white;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 400px;
-            padding: 25px;
-            text-align: center;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-        }
-        
-        .error-icon {
-            font-size: 3rem;
-            color: #ff3333;
-            margin-bottom: 15px;
-        }
-        
-        .error-title {
-            color: #ff3333;
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-        }
-        
-        .error-message {
-            color: #555;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-        
-        .dismiss-btn {
-            background: linear-gradient(to bottom, #ff9933, #ff6600);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 12px 25px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .dismiss-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        
-        .payment-instructions {
-            background-color: #fff8f0;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 20px 0;
-            font-size: 0.9rem;
-            color: #555;
-        }
-        
-        .instructions-title {
-            color: #ff6600;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        
-        @media (max-width: 500px) {
-            .amount-buttons {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .container {
-                padding: 20px;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dussehra Mamul</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+      color: #333;
+      text-align: center;
+    }
+    header {
+      padding: 2rem 1rem 1rem;
+    }
+    h1 {
+      font-size: 2.2rem;
+      color: #c62828;
+      margin: 0;
+      font-weight: bold;
+    }
+    p {
+      max-width: 700px;
+      margin: 1rem auto 2rem;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #4e342e;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 15px;
+      max-width: 500px;
+      margin: 0 auto 3rem;
+      padding: 0 1rem;
+    }
+    .buttons button {
+      background: #ff9800;
+      color: #fff;
+      border: none;
+      padding: 14px 0;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transition: transform 0.15s ease, background 0.2s ease;
+    }
+    .buttons button:hover {
+      background: #fb8c00;
+      transform: scale(1.05);
+    }
+    footer {
+      background: #c62828;
+      color: #fff;
+      padding: 1rem;
+      font-size: 0.9rem;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Dussehra Mamul</h1>
-        
-        <div class="description">
-            <p>Dussehra, also known as Vijayadashami, is one of the most important Hindu festivals celebrated in India. It symbolizes the victory of good over evil, commemorating Lord Rama's victory over the demon king Ravana. The festival is marked by Ram Lila performances, burning of Ravana effigies, exchanging gifts, and seeking blessings from elders.</p>
-        </div>
-        
-        <div class="payment-instructions">
-            <div class="instructions-title"><i class="fas fa-info-circle"></i> Payment Instructions</div>
-            <p>1. Click on any amount button below</p>
-            <p>2. You will be redirected to your UPI app</p>
-            <p>3. Complete the payment in your UPI app</p>
-            <p>4. The page will refresh after payment</p>
-        </div>
-        
-        <div class="amount-buttons">
-            <button class="amount-btn" data-amount="1">₹1</button>
-            <button class="amount-btn" data-amount="11">₹11</button>
-            <button class="amount-btn" data-amount="51">₹51</button>
-            <button class="amount-btn" data-amount="101">₹101</button>
-            <button class="amount-btn" data-amount="201">₹201</button>
-            <button class="amount-btn" data-amount="501">₹501</button>
-            <button class="amount-btn" data-amount="1001">₹1001</button>
-        </div>
-        
-        <div class="payment-list">
-            <h2>Recent Contributions</h2>
-            <div id="payment-list-container">
-                <!-- Payment items will be generated here -->
-            </div>
-        </div>
-    </div>
-    
-    <div class="footer">
-        <p>Celebrate the spirit of Dussehra with your contribution</p>
-    </div>
+  <header>
+    <h1>🎉 Dussehra Mamul 🎉</h1>
+    <p>
+      Dussehra, also called Vijayadashami, is one of India’s grandest festivals.  
+      It celebrates the victory of good over evil — Lord Rama’s triumph over Ravana and Goddess Durga’s defeat of Mahishasura.  
+      Families gather, effigies are burned, and sweets are shared in joy and togetherness.
+    </p>
+  </header>
 
-    <div class="error-modal" id="errorModal">
-        <div class="error-content">
-            <div class="error-icon">
-                <i class="fas fa-exclamation-circle"></i>
-            </div>
-            <h2 class="error-title">Payment Failed</h2>
-            <p class="error-message" id="errorMessage">The payment was not completed. Please try again or use a different payment method.</p>
-            <button class="dismiss-btn" id="dismissBtn">DISMISS</button>
-        </div>
-    </div>
+  <div class="buttons">
+    <button onclick="makePayment(1)">₹1</button>
+    <button onclick="makePayment(11)">₹11</button>
+    <button onclick="makePayment(51)">₹51</button>
+    <button onclick="makePayment(101)">₹101</button>
+    <button onclick="makePayment(201)">₹201</button>
+    <button onclick="makePayment(501)">₹501</button>
+    <button onclick="makePayment(1001)">₹1001</button>
+  </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Sample data for payments
-            const names = [
-                "Amit Kumar", "Rajesh Sharma", "Priya Singh", "Sneha Patel", 
-                "Vikram Malhotra", "Anjali Mehta", "Rahul Kapoor", "Neha Gupta",
-                "Sanjay Verma", "Kavita Joshi", "Alok Pandey", "Divya Reddy"
-            ];
-            
-            const amounts = [1, 11, 51, 101, 201, 501, 1001];
-            
-            // Generate random payment list
-            function generatePaymentList() {
-                const container = document.getElementById('payment-list-container');
-                container.innerHTML = '';
-                
-                // Shuffle names array
-                const shuffledNames = [...names].sort(() => Math.random() - 0.5);
-                
-                // Create 6-8 random payment entries
-                const count = 6 + Math.floor(Math.random() * 3);
-                
-                for (let i = 0; i < count; i++) {
-                    const name = shuffledNames[i % shuffledNames.length];
-                    const amount = amounts[Math.floor(Math.random() * amounts.length)];
-                    
-                    // Mask the name (e.g., "Amit Kumar" becomes "A*** K****")
-                    const maskedName = name.split(' ').map(part => {
-                        return part[0] + '*'.repeat(part.length - 1);
-                    }).join(' ');
-                    
-                    const paymentItem = document.createElement('div');
-                    paymentItem.className = 'payment-item';
-                    paymentItem.innerHTML = `
-                        <span class="payment-name">${maskedName}</span>
-                        <span class="payment-amount">paid ₹${amount}</span>
-                    `;
-                    
-                    container.appendChild(paymentItem);
-                }
-            }
-            
-            // Show error modal
-            function showError(message) {
-                const modal = document.getElementById('errorModal');
-                const errorMessage = document.getElementById('errorMessage');
-                errorMessage.textContent = message;
-                modal.style.display = 'flex';
-            }
-            
-            // Set up UPI payment buttons
-            document.querySelectorAll('.amount-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const amount = this.getAttribute('data-amount');
-                    const upiId = '8328873021@postbank';
-                    
-                    // Create UPI URL
-                    const upiUrl = `upi://pay?pa=${upiId}&am=${amount}&cu=INR&tn=Dussehra Mamul`;
-                    
-                    // Try to redirect to UPI
-                    try {
-                        window.location.href = upiUrl;
-                        
-                        // Show error message if still on page after 2 seconds (payment failed)
-                        setTimeout(function() {
-                            if (!document.hidden) {
-                                showError("Payment failed or was cancelled. Please make sure you have a UPI app installed and try again. You can pay up to ₹2,000 with QR codes. For larger amounts, pay with mobile number or scan QR code directly.");
-                            }
-                        }, 2000);
-                    } catch (error) {
-                        showError("Could not redirect to payment app. Please check if you have a UPI app installed.");
-                    }
-                });
-            });
-            
-            // Dismiss error modal
-            document.getElementById('dismissBtn').addEventListener('click', function() {
-                document.getElementById('errorModal').style.display = 'none';
-            });
-            
-            // Close modal if clicked outside
-            window.addEventListener('click', function(event) {
-                const modal = document.getElementById('errorModal');
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                }
-            });
-            
-            // Check if page was reloaded after a potential payment
-            if (performance.navigation.type === 1) {
-                // Page was reloaded - simulate 30% chance of failed payment for demo
-                if (Math.random() < 0.3) {
-                    setTimeout(function() {
-                        showError("We noticed you just attempted a payment. If your payment failed, please try again. Note: You can pay up to ₹2,000 with QR codes via gallery. For larger amounts, pay with mobile number or scan QR code directly.");
-                    }, 1000);
-                }
-            }
-            
-            // Generate initial payment list
-            generatePaymentList();
-        });
-    </script>
+  <footer>
+    Wishing you and your family a Happy Dussehra! ✨
+  </footer>
+
+  <script>
+    function makePayment(amount) {
+      const upiUrl = `upi://pay?pa=8328873021@postbank&am=${amount}&cu=INR&tn=Dussehra Mamul`;
+      window.location.href = upiUrl;
+
+      // Refresh page after 5 seconds
+      setTimeout(() => {
+        window.location.reload();
+      }, 5000);
+    }
+  </script>
 </body>
 </html>
