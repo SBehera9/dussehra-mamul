@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dussehra Mamul</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -31,6 +32,7 @@
             max-width: 500px;
             padding: 30px;
             margin: 20px 0;
+            position: relative;
         }
         
         h1 {
@@ -117,6 +119,79 @@
             font-size: 0.9rem;
         }
         
+        .error-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .error-content {
+            background-color: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .error-icon {
+            font-size: 3rem;
+            color: #ff3333;
+            margin-bottom: 15px;
+        }
+        
+        .error-title {
+            color: #ff3333;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .error-message {
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .dismiss-btn {
+            background: linear-gradient(to bottom, #ff9933, #ff6600);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dismiss-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .payment-instructions {
+            background-color: #fff8f0;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9rem;
+            color: #555;
+        }
+        
+        .instructions-title {
+            color: #ff6600;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
         @media (max-width: 500px) {
             .amount-buttons {
                 grid-template-columns: repeat(2, 1fr);
@@ -140,6 +215,14 @@
             <p>Dussehra, also known as Vijayadashami, is one of the most important Hindu festivals celebrated in India. It symbolizes the victory of good over evil, commemorating Lord Rama's victory over the demon king Ravana. The festival is marked by Ram Lila performances, burning of Ravana effigies, exchanging gifts, and seeking blessings from elders.</p>
         </div>
         
+        <div class="payment-instructions">
+            <div class="instructions-title"><i class="fas fa-info-circle"></i> Payment Instructions</div>
+            <p>1. Click on any amount button below</p>
+            <p>2. You will be redirected to your UPI app</p>
+            <p>3. Complete the payment in your UPI app</p>
+            <p>4. The page will refresh after payment</p>
+        </div>
+        
         <div class="amount-buttons">
             <button class="amount-btn" data-amount="1">₹1</button>
             <button class="amount-btn" data-amount="11">₹11</button>
@@ -160,6 +243,17 @@
     
     <div class="footer">
         <p>Celebrate the spirit of Dussehra with your contribution</p>
+    </div>
+
+    <div class="error-modal" id="errorModal">
+        <div class="error-content">
+            <div class="error-icon">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <h2 class="error-title">Payment Failed</h2>
+            <p class="error-message" id="errorMessage">The payment was not completed. Please try again or use a different payment method.</p>
+            <button class="dismiss-btn" id="dismissBtn">DISMISS</button>
+        </div>
     </div>
 
     <script>
@@ -204,6 +298,14 @@
                 }
             }
             
+            // Show error modal
+            function showError(message) {
+                const modal = document.getElementById('errorModal');
+                const errorMessage = document.getElementById('errorMessage');
+                errorMessage.textContent = message;
+                modal.style.display = 'flex';
+            }
+            
             // Set up UPI payment buttons
             document.querySelectorAll('.amount-btn').forEach(button => {
                 button.addEventListener('click', function() {
@@ -213,15 +315,44 @@
                     // Create UPI URL
                     const upiUrl = `upi://pay?pa=${upiId}&am=${amount}&cu=INR&tn=Dussehra Mamul`;
                     
-                    // Redirect to UPI
-                    window.location.href = upiUrl;
-                    
-                    // Refresh page after a short delay (simulating payment completion)
-                    setTimeout(function() {
-                        window.location.reload();
-                    }, 3000);
+                    // Try to redirect to UPI
+                    try {
+                        window.location.href = upiUrl;
+                        
+                        // Show error message if still on page after 2 seconds (payment failed)
+                        setTimeout(function() {
+                            if (!document.hidden) {
+                                showError("Payment failed or was cancelled. Please make sure you have a UPI app installed and try again. You can pay up to ₹2,000 with QR codes. For larger amounts, pay with mobile number or scan QR code directly.");
+                            }
+                        }, 2000);
+                    } catch (error) {
+                        showError("Could not redirect to payment app. Please check if you have a UPI app installed.");
+                    }
                 });
             });
+            
+            // Dismiss error modal
+            document.getElementById('dismissBtn').addEventListener('click', function() {
+                document.getElementById('errorModal').style.display = 'none';
+            });
+            
+            // Close modal if clicked outside
+            window.addEventListener('click', function(event) {
+                const modal = document.getElementById('errorModal');
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // Check if page was reloaded after a potential payment
+            if (performance.navigation.type === 1) {
+                // Page was reloaded - simulate 30% chance of failed payment for demo
+                if (Math.random() < 0.3) {
+                    setTimeout(function() {
+                        showError("We noticed you just attempted a payment. If your payment failed, please try again. Note: You can pay up to ₹2,000 with QR codes via gallery. For larger amounts, pay with mobile number or scan QR code directly.");
+                    }, 1000);
+                }
+            }
             
             // Generate initial payment list
             generatePaymentList();
