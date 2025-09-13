@@ -37,7 +37,11 @@
       margin: 0 auto 3rem;
       padding: 0 1rem;
     }
+    .buttons a {
+      text-decoration: none;
+    }
     .buttons button {
+      width: 100%;
       background: #ff9800;
       color: #fff;
       border: none;
@@ -74,29 +78,17 @@
   </header>
 
   <div class="buttons">
-    <button onclick="makePayment(1)">₹1</button>
-    <button onclick="makePayment(11)">₹11</button>
-    <button onclick="makePayment(51)">₹51</button>
-    <button onclick="makePayment(101)">₹101</button>
-    <button onclick="makePayment(201)">₹201</button>
-    <button onclick="makePayment(501)">₹501</button>
-    <button onclick="makePayment(1001)">₹1001</button>
+    <a href="upi://pay?pa=8328873021@postbank&am=1&cu=INR&tn=Dussehra Mamul"><button>₹1</button></a>
+    <a href="upi://pay?pa=8328873021@postbank&am=11&cu=INR&tn=Dussehra Mamul"><button>₹11</button></a>
+    <a href="upi://pay?pa=8328873021@postbank&am=51&cu=INR&tn=Dussehra Mamul"><button>₹51</button></a>
+    <a href="upi://pay?pa=8328873021@postbank&am=101&cu=INR&tn=Dussehra Mamul"><button>₹101</button></a>
+    <a href="upi://pay?pa=8328873021@postbank&am=201&cu=INR&tn=Dussehra Mamul"><button>₹201</button></a>
+    <a href="upi://pay?pa=8328873021@postbank&am=501&cu=INR&tn=Dussehra Mamul"><button>₹501</button></a>
+    <a href="upi://pay?pa=8328873021@postbank&am=1001&cu=INR&tn=Dussehra Mamul"><button>₹1001</button></a>
   </div>
 
   <footer>
     Wishing you and your family a Happy Dussehra! ✨
   </footer>
-
-  <script>
-    function makePayment(amount) {
-      const upiUrl = `upi://pay?pa=8328873021@postbank&am=${amount}&cu=INR&tn=Dussehra Mamul`;
-      window.location.href = upiUrl;
-
-      // Refresh page after 5 seconds
-      setTimeout(() => {
-        window.location.reload();
-      }, 5000);
-    }
-  </script>
 </body>
 </html>
