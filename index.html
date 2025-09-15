@@ -3,471 +3,564 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dussehra Mamul - Festive Payments</title>
+  <title>Dussehra Blessings Payment</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    :root {
-      --primary: #d32f2f;
-      --secondary: #ff9800;
-      --light: #fff8e1;
-      --dark: #5d4037;
-      --success: #4caf50;
-    }
-    
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
     }
     
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
-      color: #333;
-      line-height: 1.6;
+      background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
       min-height: 100vh;
-      padding: 20px;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: #333;
+      overflow-x: hidden;
+    }
+    
+    .festival-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      opacity: 0;
+      animation: fall linear forwards;
+    }
+    
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 1;
+      }
     }
     
     .container {
-      max-width: 900px;
       width: 100%;
-      background: white;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      animation: fadeIn 0.5s ease-out;
+      max-width: 480px;
+      margin: 0 auto;
+      position: relative;
     }
     
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    header {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-      color: white;
-      padding: 30px 20px;
+    .header {
       text-align: center;
+      margin-bottom: 30px;
+      position: relative;
+    }
+    
+    .header h1 {
+      font-size: 2.8rem;
+      color: #d32f2f;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      margin-bottom: 10px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .header h1::before, .header h1::after {
+      content: '✦';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #ff9800;
+      font-size: 1.8rem;
+    }
+    
+    .header h1::before {
+      left: -40px;
+    }
+    
+    .header h1::after {
+      right: -40px;
+    }
+    
+    .header p {
+      color: #5d4037;
+      font-size: 1.2rem;
+      margin-top: 15px;
+    }
+    
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      margin-bottom: 20px;
       position: relative;
       overflow: hidden;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
     }
     
-    header::before {
-      content: "";
+    .card::before {
+      content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      bottom: 0;
-      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.1' d='M0,128L48,117.3C96,107,192,85,288,112C384,139,480,213,576,218.7C672,224,768,160,864,128C960,96,1056,96,1152,117.3C1248,139,1344,181,1392,202.7L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
-      background-size: cover;
-      background-position: center;
+      height: 6px;
+      background: linear-gradient(90deg, #d32f2f 0%, #ff9800 100%);
     }
     
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-      position: relative;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-    }
-    
-    .subtitle {
-      font-size: 1.2rem;
-      opacity: 0.9;
-      position: relative;
-    }
-    
-    .content {
-      padding: 30px;
-    }
-    
-    .payment-options {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin-bottom: 30px;
-      justify-content: center;
-    }
-    
-    .payment-card {
-      flex: 1;
-      min-width: 250px;
-      background: #f9f9f9;
+    .festive-border {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      border: 2px dashed #ff9800;
       border-radius: 15px;
-      padding: 25px;
-      text-align: center;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-      transition: transform 0.3s, box-shadow 0.3s;
+      pointer-events: none;
+      z-index: 0;
     }
     
-    .payment-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
-    
-    .payment-card h3 {
-      color: var(--primary);
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-    
-    .amount-buttons {
+    .amounts {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 20px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin: 25px 0;
     }
     
     .amount-btn {
-      background: white;
-      border: 2px solid var(--secondary);
-      color: var(--dark);
-      padding: 12px 5px;
-      border-radius: 10px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    
-    .amount-btn:hover {
-      background: var(--secondary);
-      color: white;
-    }
-    
-    .amount-btn.active {
-      background: var(--primary);
-      border-color: var(--primary);
-      color: white;
-    }
-    
-    .btn {
-      display: inline-block;
-      background: linear-gradient(to right, var(--primary), var(--secondary));
-      color: white;
-      padding: 15px 30px;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1.1rem;
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s;
-      box-shadow: 0 5px 15px rgba(211, 47, 47, 0.3);
-      margin-top: 15px;
-    }
-    
-    .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(211, 47, 47, 0.4);
-    }
-    
-    .btn i {
-      margin-right: 8px;
-    }
-    
-    .qr-container {
-      text-align: center;
-      margin: 20px 0;
-      padding: 15px;
-      background: #f9f9f9;
+      padding: 20px 10px;
+      border: 2px solid #ffcc80;
       border-radius: 15px;
+      background: linear-gradient(to bottom, #fff3e0, #ffe0b2);
       cursor: pointer;
-      transition: all 0.3s;
-      position: relative;
-    }
-    
-    .qr-container:hover {
-      transform: scale(1.02);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    }
-    
-    .qr-code {
-      width: 200px;
-      height: 200px;
-      margin: 0 auto;
-      background: white;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .qr-code img {
-      max-width: 100%;
-      border: 1px solid #eee;
-      border-radius: 5px;
-    }
-    
-    .tap-hint {
-      position: absolute;
-      bottom: -20px;
-      left: 0;
-      right: 0;
-      text-align: center;
-      font-size: 14px;
-      color: var(--primary);
-      animation: pulse 2s infinite;
-    }
-    
-    @keyframes pulse {
-      0% { opacity: 0.6; }
-      50% { opacity: 1; }
-      100% { opacity: 0.6; }
-    }
-    
-    .instructions {
-      background: #e8f5e9;
-      padding: 20px;
-      border-radius: 15px;
-      margin-top: 30px;
-      border-left: 5px solid var(--success);
-    }
-    
-    .instructions h3 {
-      color: var(--success);
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    .instructions ol {
-      padding-left: 20px;
-      text-align: left;
-    }
-    
-    .instructions li {
-      margin-bottom: 10px;
-    }
-    
-    .festive-elements {
-      display: flex;
-      justify-content: space-around;
-      margin: 30px 0;
-      opacity: 0.7;
-    }
-    
-    .festive-elements i {
-      font-size: 2rem;
-      color: var(--secondary);
-      animation: bounce 2s infinite;
-    }
-    
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    
-    .festive-elements i:nth-child(2) {
-      animation-delay: 0.2s;
-      color: var(--primary);
-    }
-    
-    .festive-elements i:nth-child(3) {
-      animation-delay: 0.4s;
-    }
-    
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #f5f5f5;
-      color: var(--dark);
-      font-size: 0.9rem;
-    }
-    
-    .custom-amount {
-      margin-top: 20px;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      font-size: 1.2rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
     
-    .custom-input {
-      padding: 12px 20px;
-      border: 2px solid var(--secondary);
-      border-radius: 50px;
-      font-size: 16px;
-      width: 150px;
+    .amount-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+      border-color: #ff9800;
+    }
+    
+    .amount-btn.active {
+      border-color: #d32f2f;
+      background: linear-gradient(to bottom, #ffecb3, #ffcc80);
+      box-shadow: 0 5px 15px rgba(211, 47, 47, 0.3);
+      transform: translateY(-3px);
+    }
+    
+    .amount-btn.active::after {
+      content: '✓';
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 25px;
+      height: 25px;
+      background: #d32f2f;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    
+    .amount-btn .amount {
+      font-size: 1.5rem;
+      color: #d32f2f;
+      margin-bottom: 5px;
+    }
+    
+    .amount-btn .label {
+      font-size: 0.9rem;
+      color: #5d4037;
+      font-weight: normal;
+    }
+    
+    .custom-amount {
+      margin: 20px 0;
       text-align: center;
     }
     
-    @media (max-width: 768px) {
-      .amount-buttons {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    .custom-amount input {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #ffcc80;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      text-align: center;
+      background: #fff9e6;
+      margin-top: 10px;
+      transition: all 0.3s ease;
     }
     
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 2rem;
-      }
-      
-      .payment-options {
-        flex-direction: column;
-      }
-      
-      .btn {
-        padding: 12px 25px;
-        font-size: 1rem;
-      }
-      
-      .amount-buttons {
-        grid-template-columns: repeat(3, 1fr);
-      }
+    .custom-amount input:focus {
+      outline: none;
+      border-color: #d32f2f;
+      box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.2);
     }
     
-    @media (max-width: 480px) {
-      .amount-buttons {
-        grid-template-columns: repeat(2, 1fr);
+    .pay-btn {
+      display: block;
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.3rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(183, 28, 28, 0.4);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    
+    .pay-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(183, 28, 28, 0.5);
+    }
+    
+    .pay-btn:active {
+      transform: translateY(1px);
+    }
+    
+    .pay-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #ff5252 0%, #d32f2f 100%);
+      opacity: 0;
+      z-index: -1;
+      transition: opacity 0.3s ease;
+    }
+    
+    .pay-btn:hover::before {
+      opacity: 1;
+    }
+    
+    .pay-btn i {
+      margin-right: 10px;
+    }
+    
+    .qr-section {
+      text-align: center;
+      margin: 30px 0 20px;
+      padding-top: 25px;
+      border-top: 2px dashed #ffcc80;
+      position: relative;
+    }
+    
+    .qr-title {
+      font-size: 1.2rem;
+      color: #5d4037;
+      margin-bottom: 15px;
+    }
+    
+    .qr-amount {
+      color: #d32f2f;
+      font-weight: 700;
+    }
+    
+    .qr-container {
+      display: inline-block;
+      padding: 15px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      margin: 15px 0;
+      position: relative;
+      border: 2px solid #ffcc80;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .qr-container:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .qr-img {
+      width: 200px;
+      height: 200px;
+      display: block;
+    }
+    
+    .instructions {
+      margin-top: 25px;
+      font-size: 0.95rem;
+      color: #5d4037;
+      text-align: center;
+      background: rgba(255, 248, 225, 0.7);
+      padding: 15px;
+      border-radius: 12px;
+    }
+    
+    .instructions ol {
+      text-align: left;
+      padding-left: 20px;
+      margin-top: 10px;
+    }
+    
+    .instructions li {
+      margin-bottom: 8px;
+    }
+    
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      color: #5d4037;
+      font-size: 0.9rem;
+      text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+    }
+    
+    .diya-decoration {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      font-size: 4rem;
+      color: #ff9800;
+      filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.3));
+      z-index: 0;
+      opacity: 0.7;
+    }
+    
+    .firework {
+      position: fixed;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+      z-index: -1;
+    }
+    
+    @media (max-width: 500px) {
+      .amounts {
+        grid-template-columns: 1fr;
+      }
+      
+      .header h1 {
+        font-size: 2.2rem;
+      }
+      
+      .header h1::before, .header h1::after {
+        display: none;
+      }
+      
+      .card {
+        padding: 25px 20px;
       }
     }
   </style>
 </head>
 <body>
+  <div class="festival-background" id="confetti-container"></div>
+  
   <div class="container">
-    <header>
-      <h1>🎉 Dussehra Mamul 🎉</h1>
-      <p class="subtitle">Share the joy of festival with your blessings</p>
-    </header>
+    <div class="header">
+      <h1>Dussehra Blessings</h1>
+      <p>Send your blessings with a traditional gift</p>
+    </div>
     
-    <div class="content">
-      <div class="payment-options">
-        <div class="payment-card">
-          <h3><i class="fas fa-mobile-alt"></i> Tap to Pay</h3>
-          <p>Choose an amount and pay instantly with UPI</p>
-          
-          <div class="amount-buttons">
-            <button class="amount-btn" data-amount="1">₹1</button>
-            <button class="amount-btn" data-amount="51">₹51</button>
-            <button class="amount-btn active" data-amount="101">₹101</button>
-            <button class="amount-btn" data-amount="201">₹201</button>
-            <button class="amount-btn" data-amount="501">₹501</button>
-            <button class="amount-btn" data-amount="1001">₹1001</button>
-          </div>
-          
-          <div class="custom-amount">
-            <p>Or enter custom amount:</p>
-            <input type="number" class="custom-input" id="custom-amount" placeholder="Enter amount" min="1">
-          </div>
-          
-          <a href="#" id="upi-link" class="btn">
-            <i class="fas fa-bolt"></i> Pay ₹101
-          </a>
-        </div>
-        
-        <div class="payment-card">
-          <h3><i class="fas fa-qrcode"></i> QR Code</h3>
-          <p>Tap the QR code to open UPI and enter any amount</p>
-          <div class="qr-container" id="qr-tap">
-            <div class="qr-code">
-              <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=sudarshanbehera808080-3@oksbi&cu=INR&tn=Dussehra%20Mamul" alt="UPI QR Code">
-            </div>
-            <div class="tap-hint">
-              <i class="fas fa-hand-point-up"></i> Tap to open UPI app
-            </div>
-          </div>
-          <p class="note">Note: You can enter any amount in your UPI app</p>
-        </div>
+    <div class="card">
+      <div class="festive-border"></div>
+      <div class="diya-decoration">🪔</div>
+      
+      <p style="text-align: center; color: #5d4037; margin-bottom: 20px;">
+        <i class="fas fa-gift" style="color: #d32f2f;"></i> 
+        Select an amount to send your Dussehra blessings
+        <i class="fas fa-gift" style="color: #d32f2f;"></i>
+      </p>
+      
+      <div class="amounts">
+        <button class="amount-btn active" data-amt="51">
+          <span class="amount">₹51</span>
+          <span class="label">Traditional</span>
+        </button>
+        <button class="amount-btn" data-amt="101">
+          <span class="amount">₹101</span>
+          <span class="label">Blessings</span>
+        </button>
+        <button class="amount-btn" data-amt="201">
+          <span class="amount">₹201</span>
+          <span class="label">Prosperity</span>
+        </button>
+        <button class="amount-btn" data-amt="501">
+          <span class="amount">₹501</span>
+          <span class="label">Abundance</span>
+        </button>
       </div>
       
-      <div class="festive-elements">
-        <i class="fas fa-gift"></i>
-        <i class="fas fa-diya-lamp"></i>
-        <i class="fas fa-fire"></i>
+      <div class="custom-amount">
+        <label for="customAmount" style="font-weight: 600; color: #5d4037;">
+          <i class="fas fa-edit"></i> Or enter custom amount:
+        </label>
+        <input type="number" id="customAmount" placeholder="Enter amount in ₹" min="1">
       </div>
       
-      <div class="instructions">
-        <h3><i class="fas fa-info-circle"></i> How to Pay</h3>
-        <ol>
-          <li>Select an amount from the options or enter custom amount</li>
-          <li>Click the Pay button to open your UPI app directly with the amount pre-filled</li>
-          <li>Or tap the QR code to open your UPI app and enter any amount you wish</li>
-          <li>Confirm the payment for Dussehra Mamul</li>
-          <li>You'll receive a confirmation message after successful payment</li>
-        </ol>
+      <button class="pay-btn" id="payBtn">
+        <i class="fas fa-paper-plane"></i> Pay ₹51
+      </button>
+      
+      <div class="qr-section">
+        <p class="qr-title">Tap QR code to pay any amount:</p>
+        <div class="qr-container" id="qrContainer">
+          <img class="qr-img" id="qrImg" src="" alt="UPI QR Code">
+        </div>
+        <p style="font-size: 0.9rem; color: #5d4037; margin-top: 10px;">
+          <i class="fas fa-info-circle"></i> Tap the QR code to open your UPI app
+        </p>
       </div>
     </div>
     
-    <footer>
-      <p>Wishing you a Happy Dussehra! May Lord Rama bless you with happiness and prosperity.</p>
-    </footer>
+    <div class="instructions">
+      <p><strong>How to pay:</strong></p>
+      <ol>
+        <li>Select an amount above or enter a custom amount</li>
+        <li>Click "Pay" button or tap the QR code</li>
+        <li>Complete the payment in your UPI app</li>
+      </ol>
+    </div>
+    
+    <div class="footer">
+      <p>Wishing you a joyful Dussehra! May good triumph over evil in your life.</p>
+    </div>
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const amountButtons = document.querySelectorAll('.amount-btn');
-      const upiLink = document.getElementById('upi-link');
-      const qrContainer = document.getElementById('qr-tap');
-      const customAmountInput = document.getElementById('custom-amount');
-      let selectedAmount = 101;
+    let selectedAmount = 51;
+    const upiId = "your-upi-id@oksbi"; // Replace with your UPI ID
+    const buttons = document.querySelectorAll(".amount-btn");
+    const payBtn = document.getElementById("payBtn");
+    const customAmountInput = document.getElementById("customAmount");
+    const qrContainer = document.getElementById("qrContainer");
+    const qrImg = document.getElementById("qrImg");
+    const confettiContainer = document.getElementById("confetti-container");
+
+    function updateUI() {
+      payBtn.innerHTML = `<i class="fas fa-paper-plane"></i> Pay ₹${selectedAmount}`;
       
-      // Update UPI link and QR code when amount is selected
-      amountButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          // Remove active class from all buttons
-          amountButtons.forEach(btn => btn.classList.remove('active'));
-          
-          // Add active class to clicked button
-          this.classList.add('active');
-          
-          // Update selected amount
-          selectedAmount = this.getAttribute('data-amount');
-          
-          // Update payment button text
-          upiLink.innerHTML = `<i class="fas fa-bolt"></i> Pay ₹${selectedAmount}`;
-          
-          // Update UPI link with amount
-          upiLink.href = `upi://pay?pa=sudarshanbehera808080-3@oksbi&am=${selectedAmount}&cu=INR&tn=Dussehra Mamul`;
-          
-          // Clear custom amount input
-          customAmountInput.value = '';
+      // For QR code, we'll use a generic one that doesn't specify amount
+      // so users can enter their own amount in the UPI app
+      qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=${upiId}&cu=INR&tn=Dussehra%20Blessings`;
+      
+      createConfetti();
+      createFireworks();
+    }
+
+    function createConfetti() {
+      const colors = ['#d32f2f', '#ff9800', '#4caf50', '#2196f3', '#9c27b0'];
+      
+      for (let i = 0; i < 40; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confettiContainer.appendChild(confetti);
+        
+        const animationDuration = 2000 + Math.random() * 3000;
+        
+        confetti.animate([
+          { transform: 'translateY(-20px) rotate(0)', opacity: 1 },
+          { transform: `translateY(${window.innerHeight}px) rotate(${360 * Math.random()}deg)`, opacity: 0.5 }
+        ], {
+          duration: animationDuration,
+          easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)'
         });
-      });
-      
-      // Handle custom amount input
-      customAmountInput.addEventListener('input', function() {
-        if (this.value) {
-          // Remove active class from all amount buttons
-          amountButtons.forEach(btn => btn.classList.remove('active'));
+        
+        setTimeout(() => {
+          confetti.remove();
+        }, animationDuration);
+      }
+    }
+    
+    function createFireworks() {
+      for (let i = 0; i < 3; i++) {
+        setTimeout(() => {
+          const firework = document.createElement('div');
+          firework.className = 'firework';
+          firework.style.left = Math.random() * 100 + 'vw';
+          firework.style.top = Math.random() * 40 + 'vh';
+          firework.style.backgroundColor = ['#d32f2f', '#ff9800', '#4caf50', '#2196f3'][Math.floor(Math.random() * 4)];
+          document.body.appendChild(firework);
           
-          // Update selected amount
-          selectedAmount = this.value;
+          firework.animate([
+            { transform: 'scale(0)', opacity: 1 },
+            { transform: 'scale(1)', opacity: 0 }
+          ], {
+            duration: 1000,
+            easing: 'ease-out'
+          });
           
-          // Update payment button text
-          upiLink.innerHTML = `<i class="fas fa-bolt"></i> Pay ₹${selectedAmount}`;
-          
-          // Update UPI link with custom amount
-          upiLink.href = `upi://pay?pa=sudarshanbehera808080-3@oksbi&am=${selectedAmount}&cu=INR&tn=Dussehra Mamul`;
-        }
-      });
-      
-      // Make QR code tappable (without amount parameter)
-      qrContainer.addEventListener('click', function() {
-        window.location.href = 'upi://pay?pa=sudarshanbehera808080-3@oksbi&cu=INR&tn=Dussehra Mamul';
-      });
-      
-      // Add animation to buttons
-      const buttons = document.querySelectorAll('.btn, .amount-btn');
-      
-      buttons.forEach(button => {
-        button.addEventListener('click', function() {
-          this.style.transform = 'scale(0.95)';
           setTimeout(() => {
-            this.style.transform = '';
-          }, 200);
-        });
+            firework.remove();
+          }, 1000);
+        }, i * 300);
+      }
+    }
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        buttons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        selectedAmount = btn.dataset.amt;
+        customAmountInput.value = ""; // Clear custom amount
+        updateUI();
       });
     });
+
+    customAmountInput.addEventListener("input", () => {
+      if (customAmountInput.value) {
+        buttons.forEach(b => b.classList.remove("active"));
+        selectedAmount = customAmountInput.value;
+        payBtn.innerHTML = `<i class="fas fa-paper-plane"></i> Pay ₹${selectedAmount}`;
+      }
+    });
+
+    payBtn.addEventListener("click", () => {
+      payBtn.style.transform = 'scale(0.98)';
+      setTimeout(() => {
+        payBtn.style.transform = '';
+        // Redirect to UPI app with the selected amount
+        window.location.href = `upi://pay?pa=${upiId}&am=${selectedAmount}&cu=INR&tn=Dussehra Blessings`;
+      }, 150);
+    });
+
+    qrContainer.addEventListener("click", () => {
+      // Redirect to UPI app without a fixed amount
+      window.location.href = `upi://pay?pa=${upiId}&cu=INR&tn=Dussehra Blessings`;
+    });
+
+    // Initial setup
+    updateUI();
+    
+    // Add occasional fireworks
+    setInterval(createFireworks, 5000);
   </script>
 </body>
 </html>
