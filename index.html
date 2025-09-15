@@ -180,6 +180,7 @@
       border-radius: 15px;
       cursor: pointer;
       transition: all 0.3s;
+      position: relative;
     }
     
     .qr-container:hover {
@@ -204,6 +205,23 @@
       max-width: 100%;
       border: 1px solid #eee;
       border-radius: 5px;
+    }
+    
+    .tap-hint {
+      position: absolute;
+      bottom: -20px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 14px;
+      color: var(--primary);
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 0.6; }
+      50% { opacity: 1; }
+      100% { opacity: 0.6; }
     }
     
     .instructions {
@@ -266,6 +284,23 @@
       font-size: 0.9rem;
     }
     
+    .custom-amount {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .custom-input {
+      padding: 12px 20px;
+      border: 2px solid var(--secondary);
+      border-radius: 50px;
+      font-size: 16px;
+      width: 150px;
+      text-align: center;
+    }
+    
     @media (max-width: 768px) {
       .amount-buttons {
         grid-template-columns: repeat(2, 1fr);
@@ -320,6 +355,11 @@
             <button class="amount-btn" data-amount="1001">₹1001</button>
           </div>
           
+          <div class="custom-amount">
+            <p>Or enter custom amount:</p>
+            <input type="number" class="custom-input" id="custom-amount" placeholder="Enter amount" min="1">
+          </div>
+          
           <a href="#" id="upi-link" class="btn">
             <i class="fas fa-bolt"></i> Pay ₹101
           </a>
@@ -327,13 +367,16 @@
         
         <div class="payment-card">
           <h3><i class="fas fa-qrcode"></i> QR Code</h3>
-          <p>Tap the QR code to scan with any UPI app</p>
+          <p>Tap the QR code to open UPI and enter any amount</p>
           <div class="qr-container" id="qr-tap">
             <div class="qr-code">
-              <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=sudarshanbehera808080-3@oksbi&am=101&cu=INR&tn=Dussehra%20Mamul" alt="UPI QR Code">
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=sudarshanbehera808080-3@oksbi&cu=INR&tn=Dussehra%20Mamul" alt="UPI QR Code">
             </div>
-            <p class="tap-text">Tap to open UPI app</p>
+            <div class="tap-hint">
+              <i class="fas fa-hand-point-up"></i> Tap to open UPI app
+            </div>
           </div>
+          <p class="note">Note: You can enter any amount in your UPI app</p>
         </div>
       </div>
       
@@ -347,8 +390,8 @@
         <h3><i class="fas fa-info-circle"></i> How to Pay</h3>
         <ol>
           <li>Select an amount from the options or enter custom amount</li>
-          <li>Click the Pay button to open your UPI app directly</li>
-          <li>Or tap the QR code to open your UPI app and scan automatically</li>
+          <li>Click the Pay button to open your UPI app directly with the amount pre-filled</li>
+          <li>Or tap the QR code to open your UPI app and enter any amount you wish</li>
           <li>Confirm the payment for Dussehra Mamul</li>
           <li>You'll receive a confirmation message after successful payment</li>
         </ol>
@@ -365,6 +408,7 @@
       const amountButtons = document.querySelectorAll('.amount-btn');
       const upiLink = document.getElementById('upi-link');
       const qrContainer = document.getElementById('qr-tap');
+      const customAmountInput = document.getElementById('custom-amount');
       let selectedAmount = 101;
       
       // Update UPI link and QR code when amount is selected
@@ -382,17 +426,34 @@
           // Update payment button text
           upiLink.innerHTML = `<i class="fas fa-bolt"></i> Pay ₹${selectedAmount}`;
           
-          // Update UPI link
+          // Update UPI link with amount
           upiLink.href = `upi://pay?pa=sudarshanbehera808080-3@oksbi&am=${selectedAmount}&cu=INR&tn=Dussehra Mamul`;
           
-          // Update QR code (in a real implementation, this would regenerate the QR code)
-          document.querySelector('.qr-code img').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=sudarshanbehera808080-3@oksbi&am=${selectedAmount}&cu=INR&tn=Dussehra%20Mamul`;
+          // Clear custom amount input
+          customAmountInput.value = '';
         });
       });
       
-      // Make QR code tappable
+      // Handle custom amount input
+      customAmountInput.addEventListener('input', function() {
+        if (this.value) {
+          // Remove active class from all amount buttons
+          amountButtons.forEach(btn => btn.classList.remove('active'));
+          
+          // Update selected amount
+          selectedAmount = this.value;
+          
+          // Update payment button text
+          upiLink.innerHTML = `<i class="fas fa-bolt"></i> Pay ₹${selectedAmount}`;
+          
+          // Update UPI link with custom amount
+          upiLink.href = `upi://pay?pa=sudarshanbehera808080-3@oksbi&am=${selectedAmount}&cu=INR&tn=Dussehra Mamul`;
+        }
+      });
+      
+      // Make QR code tappable (without amount parameter)
       qrContainer.addEventListener('click', function() {
-        window.location.href = `upi://pay?pa=sudarshanbehera808080-3@oksbi&am=${selectedAmount}&cu=INR&tn=Dussehra Mamul`;
+        window.location.href = 'upi://pay?pa=sudarshanbehera808080-3@oksbi&cu=INR&tn=Dussehra Mamul';
       });
       
       // Add animation to buttons
