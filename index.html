@@ -4,88 +4,455 @@
   <meta charset="UTF-8">
   <title>Dussehra Blessings - Razorpay</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
     body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background: #fff8f0;
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #fff8f0 0%, #ffe8d9 100%);
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
       padding: 20px;
-    }
-    h1 {
-      color: #d32f2f;
-    }
-    .amounts {
       display: flex;
+      flex-direction: column;
+      align-items: center;
       justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 20px 0;
     }
+    
+    .container {
+      max-width: 500px;
+      width: 100%;
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(211, 47, 47, 0.15);
+      margin: 20px;
+    }
+    
+    .header {
+      background: linear-gradient(to right, #d32f2f, #f57c00);
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header::before, .header::after {
+      content: "";
+      position: absolute;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+    }
+    
+    .header::before {
+      width: 150px;
+      height: 150px;
+      top: -50px;
+      left: -50px;
+    }
+    
+    .header::after {
+      width: 120px;
+      height: 120px;
+      bottom: -40px;
+      right: -40px;
+    }
+    
+    .header h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+    
+    .header p {
+      font-size: 16px;
+      opacity: 0.9;
+      max-width: 300px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .content {
+      padding: 30px 20px;
+    }
+    
+    .festival-icon {
+      font-size: 40px;
+      color: #d32f2f;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    
+    .message {
+      background: #f9f3eb;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 25px;
+      text-align: center;
+      border-left: 4px solid #f57c00;
+    }
+    
+    .message h3 {
+      color: #d32f2f;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .message p {
+      margin-bottom: 15px;
+      line-height: 1.8;
+    }
+    
+    .highlight {
+      color: #d32f2f;
+      font-weight: 600;
+    }
+    
+    .amount-section h2 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 20px;
+    }
+    
+    .amounts {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+    
+    @media (min-width: 480px) {
+      .amounts {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
     .amount-btn {
-      padding: 10px 20px;
+      padding: 15px 10px;
       border: 2px solid #d32f2f;
-      border-radius: 10px;
+      border-radius: 12px;
       background: white;
       cursor: pointer;
       font-size: 18px;
+      font-weight: 600;
       color: #d32f2f;
-      transition: 0.2s;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
+    
     .amount-btn:hover {
       background: #d32f2f;
       color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(211, 47, 47, 0.2);
+    }
+    
+    .amount-btn:active {
+      transform: translateY(0);
+    }
+    
+    .amount-btn span {
+      font-size: 12px;
+      font-weight: normal;
+      margin-top: 5px;
+      opacity: 0.8;
+    }
+    
+    .custom-amount {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      background: #f5f5f5;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #ddd;
+    }
+    
+    .custom-amount span {
+      padding: 0 15px;
+      font-weight: 600;
+      color: #555;
+    }
+    
+    .custom-amount input {
+      flex: 1;
+      border: none;
+      padding: 15px;
+      font-size: 16px;
+      background: transparent;
+      outline: none;
+    }
+    
+    .custom-amount button {
+      background: #d32f2f;
+      color: white;
+      border: none;
+      padding: 15px 20px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+    
+    .custom-amount button:hover {
+      background: #b71c1c;
+    }
+    
+    .footer {
+      text-align: center;
+      margin-top: 25px;
+      color: #777;
+      font-size: 14px;
+    }
+    
+    .footer img {
+      height: 30px;
+      margin-top: 10px;
+    }
+    
+    .success-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 350px;
+      width: 90%;
+      animation: modalFade 0.3s;
+    }
+    
+    @keyframes modalFade {
+      from { opacity: 0; transform: translateY(-50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .modal-content i {
+      font-size: 60px;
+      color: #4caf50;
+      margin-bottom: 15px;
+    }
+    
+    .modal-content h2 {
+      color: #333;
+      margin-bottom: 15px;
+    }
+    
+    .modal-content p {
+      margin-bottom: 20px;
+      color: #555;
+    }
+    
+    .modal-content button {
+      background: #d32f2f;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+    
+    .modal-content button:hover {
+      background: #b71c1c;
     }
   </style>
 </head>
 <body>
-  <h1>🙏 Dussehra Blessings 🙏</h1>
-  <p>Select an amount to send your blessings:</p>
-
-  <!-- Fixed Amount Buttons -->
-  <div class="amounts">
-    <button class="amount-btn" onclick="payWithRazorpay(2)">₹2</button>
-    <button class="amount-btn" onclick="payWithRazorpay(51)">₹51</button>
-    <button class="amount-btn" onclick="payWithRazorpay(101)">₹101</button>
-    <button class="amount-btn" onclick="payWithRazorpay(201)">₹201</button>
-    <button class="amount-btn" onclick="payWithRazorpay(501)">₹501</button>
+  <div class="container">
+    <div class="header">
+      <h1>🙏 Dussehra Blessings 🙏</h1>
+      <p>Celebrate the victory of good over evil</p>
+    </div>
+    
+    <div class="content">
+      <div class="festival-icon">
+        <i class="fas fa-om"></i>
+      </div>
+      
+      <div class="message">
+        <h3><i class="fas fa-diya-lamp"></i> Significance of Dussehra</h3>
+        <p>Dussehra symbolizes the triumph of righteousness over evil. As we celebrate Lord Rama's victory over Ravana, we are reminded that good always prevails.</p>
+        <p>Your generous offerings help continue traditional celebrations and support community festivities. <span class="highlight">Every contribution, big or small, brings blessings and joy to this sacred occasion.</span></p>
+        <p>We are deeply thankful for your support in preserving our cultural heritage and spreading the light of goodness.</p>
+      </div>
+      
+      <div class="amount-section">
+        <h2>Select an amount to send your blessings:</h2>
+        
+        <div class="amounts">
+          <button class="amount-btn" onclick="payWithRazorpay(2)">
+            ₹2 <span>Basic Blessing</span>
+          </button>
+          <button class="amount-btn" onclick="payWithRazorpay(51)">
+            ₹51 <span>Traditional Offering</span>
+          </button>
+          <button class="amount-btn" onclick="payWithRazorpay(101)">
+            ₹101 <span>Special Blessing</span>
+          </button>
+          <button class="amount-btn" onclick="payWithRazorpay(201)">
+            ₹201 <span>Abundant Blessings</span>
+          </button>
+          <button class="amount-btn" onclick="payWithRazorpay(501)">
+            ₹501 <span>Grand Offering</span>
+          </button>
+          <button class="amount-btn" onclick="openCustomAmount()">
+            Other <span>Custom Amount</span>
+          </button>
+        </div>
+        
+        <div class="custom-amount" id="customAmountField" style="display: none;">
+          <span>₹</span>
+          <input type="number" id="customAmount" placeholder="Enter amount" min="1">
+          <button onclick="payCustomAmount()">Give</button>
+        </div>
+      </div>
+      
+      <div class="footer">
+        <p>Secure payment powered by</p>
+        <img src="https://razorpay.com/assets/razorpay-glyph.svg" alt="Razorpay">
+      </div>
+    </div>
+  </div>
+  
+  <div class="success-modal" id="successModal">
+    <div class="modal-content">
+      <i class="fas fa-check-circle"></i>
+      <h2>Payment Successful!</h2>
+      <p>Thank you for your Dussehra blessings. May you be blessed with happiness and prosperity.</p>
+      <button onclick="closeModal()">Continue</button>
+    </div>
   </div>
 
   <!-- Razorpay Checkout Script -->
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  <!-- Confetti JS -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-  <script>
-    function payWithRazorpay(amount) {
+<script>
+  async function payWithRazorpay(amount) {
+    if (amount < 1) {
+      alert("Please enter a valid amount");
+      return;
+    }
+
+    try {
+      // 1️⃣ Create order from backend
+      const response = await fetch("http://localhost:5000/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount }),
+      });
+
+      const order = await response.json();
+      if (!order.id) {
+        alert("Failed to create order");
+        return;
+      }
+
+      // 2️⃣ Open Razorpay checkout
       const options = {
-        "key": "rzp_test_RIChsLayYkZcBe", // ✅ Your Razorpay Test Key
-        "amount": amount * 100,           // Convert Rs to paise
-        "currency": "INR",
-        "name": "Dussehra Blessings",
-        "description": "Festival Offering",
-        "image": "https://your-logo-url.com/logo.png", // Optional logo
-        "handler": function (response) {
-          // 🎉 Show confetti on success
-          confetti({
-            particleCount: 150,
-            spread: 100,
-            origin: { y: 0.6 }
+        key: "rzp_test_RIChsLayYkZcBe", // Test key (safe here since order_id comes from backend)
+        amount: order.amount,
+        currency: order.currency,
+        name: "Dussehra Blessings",
+        description: "Festival Offering",
+        order_id: order.id, // 🔑 required
+        handler: async function (response) {
+          // 3️⃣ Verify payment on backend
+          const verifyRes = await fetch("http://localhost:5000/verify-payment", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(response),
           });
-          alert("✅ Payment Successful!\nPayment ID: " + response.razorpay_payment_id);
+
+          const verifyData = await verifyRes.json();
+          if (verifyData.success) {
+            // 🎉 Confetti + modal
+            confetti({
+              particleCount: 200,
+              spread: 100,
+              origin: { y: 0.6 },
+              colors: ['#d32f2f', '#f57c00', '#4caf50', '#2196f3']
+            });
+            setTimeout(showSuccessModal, 500);
+          } else {
+            alert("Payment verification failed!");
+          }
         },
-        "prefill": {
-          "name": "Test User",
-          "email": "test@example.com",
-          "contact": "9999999999"
+        prefill: {
+          name: "Test User",
+          email: "test@example.com",
+          contact: "9999999999",
         },
-        "theme": {
-          "color": "#d32f2f"
-        }
+        theme: { color: "#d32f2f" },
       };
 
-      const rzp1 = new Razorpay(options);
-      rzp1.open();
+      const rzp = new Razorpay(options);
+      rzp.open();
+
+    } catch (error) {
+      console.error("Payment error:", error);
+      alert("Something went wrong!");
     }
-  </script>
+  }
+
+  function openCustomAmount() {
+    document.getElementById('customAmountField').style.display = 'flex';
+    document.getElementById('customAmount').focus();
+  }
+
+  function payCustomAmount() {
+    const amount = document.getElementById('customAmount').value;
+    if (amount && amount >= 1 && amount <= 100000) {
+      payWithRazorpay(parseInt(amount));
+    } else {
+      alert("Please enter a valid amount (₹1 - ₹1,00,000)");
+    }
+  }
+
+  function showSuccessModal() {
+    document.getElementById('successModal').style.display = 'flex';
+    setTimeout(closeModal, 5000); // auto close after 5s
+  }
+
+  function closeModal() {
+    document.getElementById('successModal').style.display = 'none';
+  }
+
+  document.getElementById('customAmount').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      payCustomAmount();
+    }
+  });
+</script>
+
 </body>
 </html>
